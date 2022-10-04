@@ -23,10 +23,12 @@ class Admin extends Authenticatable
      *
      * @var string[]
      */
+    protected $table = 'admins';
     protected $fillable = [
         'name',
         'email',
         'password',
+        'profile_photo_path'
     ];
 
     /**

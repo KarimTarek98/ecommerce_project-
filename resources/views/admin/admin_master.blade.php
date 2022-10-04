@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>Admin - Dashboard</title>
+    <title>@yield('title')</title>
 
     <!-- Vendors Style-->
     <link rel="stylesheet" href="{{ asset('backend/css/vendors_css.css') }}">
@@ -42,7 +42,7 @@
         <!-- /.content-wrapper -->
         @include('admin.body.footer')
 
-        
+
 
         <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
@@ -61,7 +61,7 @@
     <!-- Sunny Admin App -->
     <script src="{{ asset('backend/js/template.js') }}"></script>
     <script src="{{ asset('backend/js/pages/dashboard.js') }}"></script>
-
+    @yield('js')
 
 </body>
 
