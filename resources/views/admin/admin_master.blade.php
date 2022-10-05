@@ -12,11 +12,31 @@
     <title>@yield('title')</title>
 
     <!-- Vendors Style-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"
+        type="text/css" />
     <link rel="stylesheet" href="{{ asset('backend/css/vendors_css.css') }}">
 
     <!-- Style-->
     <link rel="stylesheet" href="{{ asset('backend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/skin_color.css') }}">
+    <style>
+        .toast-success {
+        background-color: #00BC8B !important;
+        font-size: 15px !important;
+    }
+    .toast-error {
+        background-color: #EF3737 !important;
+        font-size: 15px !important;
+    }
+    .toast-info {
+        background-color: #7a15f7 !important;
+        font-size: 15px !important;
+    }
+    .toast-warning {
+        background-color: #FFB800 !important;
+        font-size: 15px !important;
+    }
+    </style>
     @yield('css')
 
 </head>
@@ -61,6 +81,42 @@
     <!-- Sunny Admin App -->
     <script src="{{ asset('backend/js/template.js') }}"></script>
     <script src="{{ asset('backend/js/pages/dashboard.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        /*@if (session()->has('message'))
+            var type = "{{ session()->get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
+                    toastr.info(" {{ session()->get('message') }} ");
+                    break;
+                case 'success':
+                    toastr.success(" {{ session()->get('message') }} ");
+                    break;
+                case 'warning':
+                    toastr.warning(" {{ session()->get('message') }} ");
+                    break;
+                case 'error':
+                    toastr.error(" {{ session()->get('message') }} ");
+                    break;
+            }
+        @endif*/
+
+        $(document).ready(function() {
+            toastr.options.timeOut = 3000;
+            @if (session()->has('error'))
+                toastr.error('{{ session()->get('error') }}');
+            @elseif(session()->has('success'))
+                toastr.success('{{ session()->get('success') }}');
+            @elseif(session()->has('info'))
+                toastr.info('{{ session()->get('info') }}');
+            @elseif(session()->has('warning'))
+                toastr.warning('{{ session()->get('warning') }}');
+            @endif
+        });
+
+    </script>
     @yield('js')
 
 </body>

@@ -42,7 +42,7 @@ class ProfileController extends Controller
                 unlink($adminToUpdate->profile_photo_path);
             }
 
-            // if directory not exsist it will be created and picture will be moved to it 
+            // if directory not exsist it will be created and picture will be moved to it
             $profPic->move('uploads/profile-pics', $picName);
 
             $url = 'uploads/profile-pics/' . $picName;
@@ -52,7 +52,9 @@ class ProfileController extends Controller
                 'email' => $request->email,
                 'profile_photo_path' => $url
             ]);
-            return redirect()->route('admin.profile');
+            
+            return redirect()->route('admin.profile')
+                ->with('success', 'Admin Profile updated successfully');
         }
         else
         {
@@ -60,7 +62,9 @@ class ProfileController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
-            return redirect()->route('admin.profile');
+
+            return redirect()->route('admin.profile')
+                ->with('success', 'Admin Profile updated successfully');
         }
     }
 }
