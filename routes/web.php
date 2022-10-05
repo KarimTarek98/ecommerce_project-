@@ -16,7 +16,7 @@ use App\Http\Controllers\AdminController;
 
 // Homepage
 Route::get('/', function () {
-    return view('welcome');
+    return view('app.index');
 });
 
 

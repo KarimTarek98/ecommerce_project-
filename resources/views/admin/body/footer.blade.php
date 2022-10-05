@@ -9,5 +9,5 @@
             </li>
         </ul>
     </div>
-    &copy; 2022 <a href="#">Magnolia Store</a>. All Rights Reserved.
+    &copy; 2022 <a href="#">Starbuy</a>. All Rights Reserved.
 </footer>
