@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -14,13 +15,13 @@ class ProfileController extends Controller
         $admin = Auth::guard('admin')->user();
 
 
-        return view('admin.profile-page', compact('admin'));
+        return view('admin.profile.profile-page', compact('admin'));
     }
 
     public function editProfile()
     {
         $admin = Auth::guard('admin')->user();
-        return view('admin.edit-profile', compact('admin'));
+        return view('admin.profile.edit-profile', compact('admin'));
     }
 
     public function updateProfile(Request $request)
@@ -52,7 +53,7 @@ class ProfileController extends Controller
                 'email' => $request->email,
                 'profile_photo_path' => $url
             ]);
-            
+
             return redirect()->route('admin.profile')
                 ->with('success', 'Admin Profile updated successfully');
         }
@@ -66,5 +67,45 @@ class ProfileController extends Controller
             return redirect()->route('admin.profile')
                 ->with('success', 'Admin Profile updated successfully');
         }
+    }
+
+    public function changePassword()
+    {
+        $adminId = Auth::guard('admin')->user()->id;
+        return view('admin.profile.change-password', compact('adminId'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|string|min:8',
+            'password' => 'required|string|confirmed|min:8',
+            'password_confirmation' => 'required|string|min:8|same:password',
+        ]);
+
+        $currentPass = $request->current_password;
+        $adminOldPass = Auth::guard('admin')->user()->password;
+        $adminId = $request->admin_id;
+
+        $adminUser = Admin::find($adminId);
+
+        if (Hash::check($currentPass, $adminOldPass))
+        {
+            $adminUser->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            auth('admin')->logout();
+
+            return redirect('/admin/login')
+                ->with('success', 'Admin Password Changed');
+        }
+        else
+        {
+            return redirect()->back()
+                ->with('error', 'Something went wrong, try again');
+        }
+
+
     }
 }
