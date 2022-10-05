@@ -1,36 +1,55 @@
-<x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
+@extends('app.main_master')
 
-        <x-jet-validation-errors class="mb-4" />
+@section('title')
+    Reset Password | Starbuy Store
+@endsection
 
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
+@section('content')
 
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+    <div class="body-content">
+        <div class="container">
+            <div class="sign-in-page">
+                <div class="row">
 
-            <div class="block">
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
+                    <!-- Sign-in -->
+                    <div class="col-md-6 col-sm-6 sign-in">
+                        <h4 class="">Reset Your Password</h4>
+
+                        <form class="register-form outer-top-xs"
+                        action="{{ route('password.update') }}"
+                        method="POST" role="form">
+                        @csrf
+
+                            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                            <div class="form-group">
+                                <label class="info-title" for="email">Email Address <span>*</span></label>
+                                <input type="email" id="email" class="form-control unicase-form-control text-input"
+                                name="email" value="{{ old('email') }}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="info-title" for="password">New Password <span>*</span></label>
+                                <input type="password" name="password" class="form-control unicase-form-control text-input"
+                                    id="password">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="info-title" for="password_confirmation">Confirm Password <span>*</span></label>
+                                <input type="password" name="password_confirmation" class="form-control unicase-form-control text-input"
+                                    id="password_confirmation">
+                            </div>
+
+                            <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Reset Password</button>
+                        </form>
+
+                    </div>
+
+                </div>
             </div>
-
-            <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
-                    {{ __('Reset Password') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
-</x-guest-layout>
+            <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+            @include('app.body.partners')
+            <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+        </div><!-- /.container -->
+    </div><!-- /.body-content -->
+@endsection

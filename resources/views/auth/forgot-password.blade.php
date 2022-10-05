@@ -1,34 +1,53 @@
-<x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
+@extends('app.main_master')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-        </div>
+@section('title')
+    Forgot Password | Starbuy Store
+@endsection
 
-        @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
+@section('content')
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="home.html">Home</a></li>
+                    <li class='active'>Forgot Password</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+
+    <div class="body-content">
+        <div class="container">
+            <div class="sign-in-page">
+                <div class="row">
+
+                    <!-- Reset password -->
+                    <div class="col-md-6 col-sm-6 sign-in">
+                        <h4 class="">Reset your password</h4>
+
+
+                        <form class="register-form outer-top-xs"
+                        action="{{ route('password.email') }}"
+                        method="POST" role="form">
+                        @csrf
+
+                            <div class="form-group">
+                                <label class="info-title" for="email">Email Address <span>*</span></label>
+                                <input type="email" id="email" class="form-control unicase-form-control text-input"
+                                name="email" value="{{ old('email') }}" />
+                            </div>
+
+
+                            <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Email Password Reset Link</button>
+                        </form>
+
+                    </div>
+
+                </div>
             </div>
-        @endif
-
-        <x-jet-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <div class="block">
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
-</x-guest-layout>
+            <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+            @include('app.body.partners')
+            <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+        </div><!-- /.container -->
+    </div><!-- /.body-content -->
+@endsection

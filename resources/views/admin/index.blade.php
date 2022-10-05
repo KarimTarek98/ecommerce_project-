@@ -1,7 +1,7 @@
 @extends('admin.admin_master')
 
 @section('title')
-    Magnolia Store | Dashboard
+    Starbuy Store | Dashboard
 @endsection
 
 @section('content')
