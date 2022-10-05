@@ -10,7 +10,12 @@
                         <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
                         <li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
                         <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
-                        <li><a href="#"><i class="icon fa fa-lock"></i>Login</a></li>
+
+                        @auth
+                            <li><a href="{{ url('/') }}"><i class="icon fa fa-user"></i>Profile</a></li>
+                        @else
+                            <li><a href="{{ url('/login') }}"><i class="icon fa fa-lock"></i>Login | Register</a></li>
+                        @endauth
                     </ul>
                 </div>
                 <!-- /.cnt-account -->
@@ -52,7 +57,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
                     <!-- ============================================================= LOGO ============================================================= -->
-                    <div class="logo"> <a href="home.html"> <h1 class="app-logo">Starbuy</h1> </a>
+                    <div class="logo"> <a href="{{ url('/') }}"> <h1 class="app-logo">Starbuy</h1> </a>
                     </div>
                     <!-- /.logo -->
                     <!-- ============================================================= LOGO : END ============================================================= -->
