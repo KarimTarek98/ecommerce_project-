@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,14 @@ Route::prefix('admin')->group(function () {
             Route::post('/update-password', 'updatePassword')->name('admin.update-password');
         });
         // Admin Dashboard Partners Routes
-        
+        Route::prefix('partners')->group(function () {
+            Route::controller(PartnerController::class)->group(function () {
+                Route::get('/', 'allPartners')->name('admin.all-partners');
+                Route::get('/add-partner', 'addPartnerView')->name('admin.add-partner');
+                Route::post('/store-partners', 'storePartners')->name('admin.store-partner');
+            });
+        });
+
     });
 
 
