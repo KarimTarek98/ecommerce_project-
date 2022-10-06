@@ -39,6 +39,8 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/logout', 'logout')->name('user.logout');
     Route::get('/user/edit-profile', 'editProfile')->name('user.edit-profile');
     Route::post('/update-profile', 'updateProfile')->name('update.user-profile');
+    Route::get('/user/change-password', 'changePassword')->name('change-password.user');
+    Route::post('/user/update-pass', 'updatePass')->name('update.user-password');
 });
 
 

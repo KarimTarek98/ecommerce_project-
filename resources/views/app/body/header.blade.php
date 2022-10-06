@@ -12,7 +12,7 @@
                         <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
 
                         @auth
-                            <li><a href="{{ url('/') }}"><i class="icon fa fa-user"></i>Profile</a></li>
+                            <li><a href="{{ route('dashboard') }}"><i class="icon fa fa-user"></i>Profile</a></li>
                         @else
                             <li><a href="{{ url('/login') }}"><i class="icon fa fa-lock"></i>Login | Register</a></li>
                         @endauth

@@ -28,7 +28,7 @@
                 <ul class="list-group list-group-flush">
                     <a href="" class="btn btn-primary btn-small btn-block">Home</a>
                     <a href="{{ route('user.edit-profile') }}" class="btn btn-success btn-small btn-block">Edit Profile</a>
-                    <a href="" class="btn btn-info btn-small btn-block">Change Password</a>
+                    <a href="{{ route('change-password.user') }}" class="btn btn-info btn-small btn-block">Change Password</a>
                     <a href="{{ route('user.logout') }}" class="btn btn-danger btn-small btn-block">Logout</a>
                 </ul>
 

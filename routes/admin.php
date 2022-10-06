@@ -24,7 +24,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::middleware('auth:admin')->group(function () {
-
+        // Admin Profile Routes
         Route::controller(ProfileController::class)->group(function () {
             Route::get('/profile', 'profileView')->name('admin.profile');
             Route::get('/edit-profile', 'editProfile')->name('admin.edit-profile');
@@ -33,7 +33,8 @@ Route::prefix('admin')->group(function () {
 
             Route::post('/update-password', 'updatePassword')->name('admin.update-password');
         });
-
+        // Admin Dashboard Partners Routes
+        
     });
 
 
