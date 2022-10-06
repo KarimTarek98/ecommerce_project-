@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Home\UserController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +26,19 @@ Route::get('/', function () {
 
 
 // return user to dashboard if authenticated
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'
+Route::middleware(['auth:sanctum,web', config('jetstream.auth_session'), 'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        return view('dashboard', compact('user'));
     })->name('dashboard');
 });
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/logout', 'logout')->name('user.logout');
+    Route::get('/user/edit-profile', 'editProfile')->name('user.edit-profile');
+    Route::post('/update-profile', 'updateProfile')->name('update.user-profile');
+});
+
+

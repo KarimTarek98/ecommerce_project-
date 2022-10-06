@@ -85,23 +85,6 @@
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        /*@if (session()->has('message'))
-            var type = "{{ session()->get('alert-type', 'info') }}"
-            switch (type) {
-                case 'info':
-                    toastr.info(" {{ session()->get('message') }} ");
-                    break;
-                case 'success':
-                    toastr.success(" {{ session()->get('message') }} ");
-                    break;
-                case 'warning':
-                    toastr.warning(" {{ session()->get('message') }} ");
-                    break;
-                case 'error':
-                    toastr.error(" {{ session()->get('message') }} ");
-                    break;
-            }
-        @endif*/
 
         $(document).ready(function() {
             toastr.options.timeOut = 3000;
