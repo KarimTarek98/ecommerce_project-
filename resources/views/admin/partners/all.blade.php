@@ -60,8 +60,12 @@
                                             alt="">
                                         </td>
                                         <td>
-                                            <a href="" class="btn btn-success">Edit</a>
-                                            <a href="" class="btn btn-danger">Delete</a>
+                                            <a href="{{ route('admin.edit-partner', $partner->id) }}" class="btn btn-success" title="Edit Partner">
+                                                <i class="fa  fa-pencil-square-o"></i>
+                                            </a>
+                                            <a href="{{ route('admin.delete-partner', $partner->id) }}" id="delete" class="btn btn-danger" title="Delete Partner">
+                                                <i class="fa  fa-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach

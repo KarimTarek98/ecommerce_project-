@@ -21,21 +21,24 @@
     <link rel="stylesheet" href="{{ asset('backend/css/skin_color.css') }}">
     <style>
         .toast-success {
-        background-color: #00BC8B !important;
-        font-size: 15px !important;
-    }
-    .toast-error {
-        background-color: #EF3737 !important;
-        font-size: 15px !important;
-    }
-    .toast-info {
-        background-color: #7a15f7 !important;
-        font-size: 15px !important;
-    }
-    .toast-warning {
-        background-color: #FFB800 !important;
-        font-size: 15px !important;
-    }
+            background-color: #00BC8B !important;
+            font-size: 15px !important;
+        }
+
+        .toast-error {
+            background-color: #EF3737 !important;
+            font-size: 15px !important;
+        }
+
+        .toast-info {
+            background-color: #7a15f7 !important;
+            font-size: 15px !important;
+        }
+
+        .toast-warning {
+            background-color: #FFB800 !important;
+            font-size: 15px !important;
+        }
     </style>
     @yield('css')
 
@@ -85,27 +88,50 @@
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-
         $(document).ready(function() {
             toastr.options.timeOut = 3000;
             @if (session()->has('error'))
                 toastr.error('{{ session()->get('error') }}');
-            @elseif(session()->has('success'))
+            @elseif (session()->has('success'))
                 toastr.success('{{ session()->get('success') }}');
-            @elseif(session()->has('info'))
+            @elseif (session()->has('info'))
                 toastr.info('{{ session()->get('info') }}');
-            @elseif(session()->has('warning'))
+            @elseif (session()->has('warning'))
                 toastr.warning('{{ session()->get('warning') }}');
             @endif
         });
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+        $(function() {
+            $(document).on('click', '#delete', function(e) {
+                e.preventDefault();
+                var link = $(this).attr("href");
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = link
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            });
+        });
     </script>
     @yield('js')
 
 </body>
 
 </html>
-
-
-
-

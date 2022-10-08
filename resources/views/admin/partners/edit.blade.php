@@ -1,7 +1,7 @@
 @extends('admin.admin_master')
 
 @section('title')
-    Add New Partners | Dashboard
+    Edit Partner Info | Dashboard
 @endsection
 
 @section('content')
@@ -31,7 +31,7 @@
 
             <div class="box">
                 <div class="box-header with-border">
-                    <h4 class="box-title">Add New Partners</h4>
+                    <h4 class="box-title">Edit Partner Info</h4>
                 </div>
                 @if ($errors->any())
                             @foreach ($errors->all() as $error)
@@ -50,14 +50,19 @@
 
 
                         <div class="col">
-                            <form action="{{ route('admin.store-partner') }}" enctype="multipart/form-data" method="POST">
+                            <form action="{{ route('admin.update-partner') }}" enctype="multipart/form-data" method="POST">
                                 @csrf
+
+                                <input type="hidden" name="partner_id" value="{{ $partner->id }}">
+
+
+
                                 <div class="row" style="margin-bottom: 30px">
                                     <div class="col-md-12">
                                         <h5>Partner Name En <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="partner_name_en" class="form-control"
-                                                required="" data-validation-required-message="This field is required">
+                                                required="" value="{{ $partner->partner_name_en }}" data-validation-required-message="This field is required">
                                             <div class="help-block"></div>
                                             @error('partner_name_en')
                                             <span class="text-danger">
@@ -73,7 +78,7 @@
                                         <h5>Partner Name Ar <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="partner_name_ar" class="form-control"
-                                                required="" data-validation-required-message="This field is required">
+                                                required="" value="{{ $partner->partner_name_ar }}" data-validation-required-message="This field is required">
                                             <div class="help-block"></div>
                                             @error('partner_name_ar')
                                             <span class="text-danger">
@@ -86,10 +91,9 @@
 
                                 <div class="row" style="margin-bottom: 30px">
                                     <div class="col-md-12">
-                                        <h5>Partner Image | Logo <span class="text-danger">*</span></h5>
+                                        <h5>Edit Partner with new image <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="file" name="partner_img" class="form-control"
-                                                required="" data-validation-required-message="This field is required">
+                                            <input type="file" name="partner_img" class="form-control" />
                                             <div class="help-block"></div>
                                         </div>
                                         @error('partner_img')
@@ -101,7 +105,7 @@
                                 </div>
 
                                 <div class="text-xs-right">
-                                    <input type="submit" class="btn btn-rounded btn-info" value="Store Partner" />
+                                    <input type="submit" class="btn btn-rounded btn-info" value="Update Partner" />
                                 </div>
                             </form>
 

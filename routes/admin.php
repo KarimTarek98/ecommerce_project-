@@ -40,6 +40,9 @@ Route::prefix('admin')->group(function () {
                 Route::get('/', 'allPartners')->name('admin.all-partners');
                 Route::get('/add-partner', 'addPartnerView')->name('admin.add-partner');
                 Route::post('/store-partners', 'storePartners')->name('admin.store-partner');
+                Route::get('/edit/{id}', 'editPartnerPage')->name('admin.edit-partner');
+                Route::post('/update-partner', 'updatePartner')->name('admin.update-partner');
+                Route::get('/delete/{id}', 'deletePartner')->name('admin.delete-partner');
             });
         });
 
