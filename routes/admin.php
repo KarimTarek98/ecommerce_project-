@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
@@ -49,7 +50,6 @@ Route::prefix('admin')->group(function () {
 
         // Admin Dashboard Categories Routes
         Route::prefix('categories')->group(function () {
-
             Route::controller(CategoryController::class)->group(function () {
                 Route::get('/', 'allCategories')->name('admin.all-categories');
 
@@ -62,6 +62,22 @@ Route::prefix('admin')->group(function () {
                 Route::post('/update', 'updateCategory')->name('admin.update-category');
 
                 Route::get('/delete/{id}', 'deleteCategory')->name('admin.delete-category');
+            });
+        });
+        // All Routes for admin subcategories
+        Route::prefix('sub')->group(function () {
+
+            Route::controller(SubCategoryController::class)->group(function () {
+
+                Route::get('/', 'all')->name('admin.subcategories');
+
+                Route::get('/add', 'add')->name('admin.add-subcategory');
+                Route::post('/store', 'store')->name('admin.store-subcategory');
+
+                Route::get('/edit/{id}', 'edit')->name('admin.edit-subcategory');
+                Route::post('/update', 'update')->name('admin.update-subcategory');
+                Route::get('/del/{id}', 'delete')->name('admin.delete-subcategory');
+
             });
 
         });
