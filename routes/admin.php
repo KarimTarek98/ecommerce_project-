@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,25 @@ Route::prefix('admin')->group(function () {
                 Route::post('/update-partner', 'updatePartner')->name('admin.update-partner');
                 Route::get('/delete/{id}', 'deletePartner')->name('admin.delete-partner');
             });
+        });
+
+        // Admin Dashboard Categories Routes
+        Route::prefix('categories')->group(function () {
+
+            Route::controller(CategoryController::class)->group(function () {
+                Route::get('/', 'allCategories')->name('admin.all-categories');
+
+                Route::get('/add', 'addCategory')->name('admin.add-category');
+
+                Route::post('/store', 'storeCategory')->name('admin.store-category');
+
+                Route::get('/edit/{id}', 'editCategory')->name('admin.edit-category');
+
+                Route::post('/update', 'updateCategory')->name('admin.update-category');
+
+                Route::get('/delete/{id}', 'deleteCategory')->name('admin.delete-category');
+            });
+
         });
 
     });
