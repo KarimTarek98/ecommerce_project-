@@ -130,6 +130,7 @@
             });
         });
     </script>
+
     @yield('js')
 
 </body>

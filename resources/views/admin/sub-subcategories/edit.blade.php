@@ -1,15 +1,16 @@
 @extends('admin.admin_master')
 
 @section('title')
-    Add New Subcategory | Dashboard
+    Add New Sub-subcategory | Dashboard
 @endsection
 
 @section('content')
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="d-flex align-items-center">
             <div class="mr-auto">
-                <h3 class="page-title">Subcategories</h3>
+                <h3 class="page-title">Sub-subcategories</h3>
                 <div class="d-inline-block align-items-center">
                     <nav>
                         <ol class="breadcrumb">
@@ -31,7 +32,7 @@
 
             <div class="box">
                 <div class="box-header with-border">
-                    <h4 class="box-title">Add New Subcategory</h4>
+                    <h4 class="box-title">Add New Sub-subcategory</h4>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -40,13 +41,17 @@
 
 
                         <div class="col">
-                            <form action="{{ route('admin.store-subcategory') }}" method="POST">
+                            <form action="{{ route('sub-subcategory.update') }}" method="POST">
                                 @csrf
+
+                                <input type="hidden" name="subsub_id" value="{{ $subsubcategory->id }}">
+
                                 <div class="row" style="margin-bottom: 30px">
                                     <div class="col-md-12">
-                                        <h5>Subcategory Name En <span class="text-danger">*</span></h5>
+                                        <h5>Sub-subcategory Name En <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="subcategory_name_en" class="form-control" />
+                                            <input type="text" name="sub_sub_category_name_en"
+                                            value="{{ $subsubcategory->sub_sub_category_name_en }}" class="form-control" />
                                             <div class="help-block"></div>
                                             @error('subcategory_name_en')
                                             <span class="text-danger">
@@ -59,9 +64,10 @@
 
                                 <div class="row" style="margin-bottom: 30px">
                                     <div class="col-md-12">
-                                        <h5>Subcategory Name Ar <span class="text-danger">*</span></h5>
+                                        <h5>Sub-subcategory Name Ar <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="subcategory_name_ar" class="form-control" />
+                                            <input type="text" name="sub_sub_category_name_ar"
+                                            value="{{ $subsubcategory->sub_sub_category_name_ar }}" class="form-control" />
                                             <div class="help-block"></div>
                                             @error('subcategory_name_ar')
                                             <span class="text-danger">
@@ -79,7 +85,8 @@
                                             <select name="category_id" id="select" class="form-control" aria-invalid="false">
                                                 <option selected disabled>Select Your Category</option>
                                                 @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">
+                                                <option value="{{ $category->id }}"
+                                                    {{ ($category->id == $subsubcategory->category_id) ? 'selected' : '' }} >
                                                     {{ $category->category_name_en }}
                                                 </option>
                                                 @endforeach
@@ -93,8 +100,32 @@
                                     </div>
                                 </div>
 
+                                <div class="row" style="margin-bottom: 30px">
+                                    <div class="col-md-12">
+                                        <h5>Sub Category <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <select name="subcategory_id" id="select" class="form-control" aria-invalid="false">
+                                                <option selected disabled>Select Your Sub Category</option>
+                                                @if (!empty($subcategories))
+                                                @foreach ($subcategories as $subcategory)
+                                                <option value="{{ $subcategory->id }}"
+                                                    {{ ($subsubcategory->subcategory_id == $subcategory->id) ? 'selected' : '' }} >
+                                                    {{ $subcategory->subcategory_name_en }}
+                                                </option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+                                        <div class="help-block"></div></div>
+                                        @error('category_icon')
+                                            <span class="text-danger">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                    </div>
+                                </div>
+
                                 <div class="text-xs-right">
-                                    <input type="submit" class="btn btn-rounded btn-info" value="Store Subcategory" />
+                                    <input type="submit" class="btn btn-rounded btn-info" value="Update Subcategory" />
                                 </div>
                             </form>
 
@@ -109,4 +140,38 @@
         </div>
 
     </section>
+
+
 @endsection
+
+@section('js')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('select[name="category_id"]').on('change', function () {
+            var category_id = $(this).val();
+
+            if (category_id)
+            {
+                $.ajax({
+                    url: "{{  url('/admin/sub-sub/get') }}/"+category_id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('select[name="subcategory_id"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="subcategory_id"]').append('<option value="'+ value.id +'">'+ value.subcategory_name_en +'</option>');
+                        });
+                    },
+                });
+            }
+            else
+            {
+                alert('danger');
+            }
+        });
+    });
+</script>
+@endsection
+
+

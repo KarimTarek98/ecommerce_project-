@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\SubSubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
@@ -80,6 +81,23 @@ Route::prefix('admin')->group(function () {
 
             });
 
+        });
+
+        // All Routes for admin subsubcategories
+        Route::prefix('sub-sub')->group(function () {
+            Route::controller(SubSubCategoryController::class)->group(function () {
+                Route::get('/', 'all')->name('admin.sub-subcategories');
+                Route::get('/add', 'add')->name('admin.add-subsubcategory');
+                // route to fetch subcategories with ajax
+                Route::get('/get/{category_id}', 'getSubcategories');
+
+                Route::post('/store', 'store')->name('sub-subcategory.store');
+
+                Route::get('/edit/{id}', 'edit')->name('sub-subcategory.edit');
+
+                Route::post('/update', 'update')->name('sub-subcategory.update');
+                Route::get('/delete/{id}', 'delete')->name('sub-subcategory.delete');
+            });
         });
 
     });

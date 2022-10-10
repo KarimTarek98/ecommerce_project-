@@ -65,6 +65,12 @@
                             All Sub Categories
                         </a>
                     </li>
+                    <li class="{{ ($route == 'admin.sub-subcategories') ? 'active' : '' }}">
+                        <a href="{{ route('admin.sub-subcategories') }}">
+                            <i class="ti-more"></i>
+                            Sub Sub-Categories
+                        </a>
+                    </li>
                 </ul>
             </li>
 
