@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SubSubCategoryController;
@@ -98,6 +99,17 @@ Route::prefix('admin')->group(function () {
                 Route::post('/update', 'update')->name('sub-subcategory.update');
                 Route::get('/delete/{id}', 'delete')->name('sub-subcategory.delete');
             });
+        });
+
+        // Routes for products
+        Route::prefix('products')->group(function () {
+
+            Route::controller(ProductController::class)->group(function () {
+
+                Route::get('/add', 'addProduct')->name('admin.add-product');
+
+            });
+
         });
 
     });
