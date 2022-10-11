@@ -113,6 +113,10 @@ Route::prefix('admin')->group(function () {
 
                 Route::post('/store', 'storeProduct')->name('admin.store-product');
 
+                Route::get('/manage', 'viewProducts')->name('admin.manage-products');
+                // route for edit product page
+                Route::get('/edit/{id}', 'edit')->name('admin.edit-product');
+
             });
 
         });

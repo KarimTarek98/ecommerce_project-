@@ -44,7 +44,7 @@ class ProductController extends Controller
         // product image upload
         $prodThumb = $request->file('product_thumbnail');
         $thumbName = hexdec(uniqid()) . '.' . $prodThumb->getClientOriginalExtension();
-        
+
         Image::make($prodThumb)->resize(917, 1000)->save('uploads/products/product-thumbnails/' . $thumbName);
 
         $saveUrl = 'uploads/products/product-thumbnails/' . $thumbName;
@@ -66,7 +66,7 @@ class ProductController extends Controller
             'product_size_ar' => $request->product_size_ar,
             'product_color_en' => $request->product_color_en,
             'product_color_ar' => $request->product_color_ar,
-            'selling_price' => $request->product_color_ar,
+            'selling_price' => $request->selling_price,
             'discount_price' => $request->discount_price,
             'product_thumbnail' => $saveUrl,
             'product_overview_en' => $request->product_overview_en,
@@ -100,7 +100,32 @@ class ProductController extends Controller
             ]);
         }
 
-        return redirect()->back()
+        return redirect()->route('admin.manage-products')
             ->with('success', 'Product Inserted Successfully');
     }
+
+    // method to display all products in the database
+    public function viewProducts()
+    {
+        $products = Product::orderBy('id', 'DESC')->get();
+
+        return view('admin.products.view-products', compact('products'));
+    }
+
+    public function edit($id)
+    {
+        $brands = Partner::latest()->get();
+        $categories = Category::latest()->get();
+        $product = Product::find($id);
+
+        $subCategories = SubCategory::where('category_id', '=', $product->category_id)
+            ->get();
+
+        $subSubCategories = SubSubCategory::where('subcategory_id', '=', $product->subcategory_id)
+            ->get();
+
+        return view('admin.products.edit', compact('brands', 'categories', 'subCategories', 'subSubCategories', 'product'));
+
+    }
+
 }
