@@ -107,6 +107,11 @@ Route::prefix('admin')->group(function () {
             Route::controller(ProductController::class)->group(function () {
 
                 Route::get('/add', 'addProduct')->name('admin.add-product');
+                // Ajax Routes
+                Route::get('/get/{category_id}', 'getSubCat');
+                Route::get('/getsubsub/{subcategory_id}', 'getSubSub');
+
+                Route::post('/store', 'storeProduct')->name('admin.store-product');
 
             });
 

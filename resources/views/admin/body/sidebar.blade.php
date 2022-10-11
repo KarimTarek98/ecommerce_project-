@@ -83,7 +83,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.add-product') }}"><i class="ti-more"></i>Add Product</a></li>
+                    <li class="{{ ($route == 'admin.add-product') ? 'active' : '' }}"><a href="{{ route('admin.add-product') }}"><i class="ti-more"></i>Add Product</a></li>
                     <li><a href="timeline.html"><i class="ti-more"></i>Manage Products</a></li>
                 </ul>
             </li>
