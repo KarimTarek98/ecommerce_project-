@@ -23,11 +23,13 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col">
-                        <form method="POST" action="">
+                        <form method="POST" action="{{ route('admin.update-product') }}">
                             @csrf
+                            {{-- Get product id to update --}}
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+
                             <div class="row">
                                 <div class="col-12">
-
 
                                     <div class="row">
                                         <!-- start 1st row  -->
@@ -128,7 +130,8 @@
                                     <div class="form-group">
                                         <h5>Product Name En <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="product_name_en" value="{{ $product->product_name_en }}" class="form-control">
+                                            <input type="text" name="product_name_en"
+                                                value="{{ $product->product_name_en }}" class="form-control">
                                             @error('product_name_en')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -141,7 +144,8 @@
                                     <div class="form-group">
                                         <h5>Product Name Ar <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="product_name_ar" value="{{ $product->product_name_ar }}" class="form-control">
+                                            <input type="text" name="product_name_ar"
+                                                value="{{ $product->product_name_ar }}" class="form-control">
                                             @error('product_name_ar')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -157,7 +161,8 @@
                                     <div class="form-group">
                                         <h5>Product Code <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="product_code" value="{{ $product->product_code }}" class="form-control">
+                                            <input type="text" name="product_code" value="{{ $product->product_code }}"
+                                                class="form-control">
                                             @error('product_code')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -171,7 +176,8 @@
                                     <div class="form-group">
                                         <h5>Product Quantity <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="product_qty" value="{{ $product->product_qty }}" class="form-control">
+                                            <input type="text" name="product_qty" value="{{ $product->product_qty }}"
+                                                class="form-control">
                                             @error('product_qty')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -186,7 +192,8 @@
                                     <div class="form-group">
                                         <h5>Product Tags En <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="product_tags_en" value="{{ $product->product_tags_en }}" class="form-control"
+                                            <input type="text" name="product_tags_en"
+                                                value="{{ $product->product_tags_en }}" class="form-control"
                                                 data-role="tagsinput">
                                             @error('product_tags_en')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -207,7 +214,8 @@
                                     <div class="form-group">
                                         <h5>Product Tags Ar <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="product_tags_ar" value="{{ $product->product_tags_ar }}" class="form-control"
+                                            <input type="text" name="product_tags_ar"
+                                                value="{{ $product->product_tags_ar }}" class="form-control"
                                                 data-role="tagsinput">
                                             @error('product_tags_hin')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -221,7 +229,8 @@
                                     <div class="form-group">
                                         <h5>Product Size En <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="product_size_en" value="{{ $product->product_tags_ar }}" class="form-control"
+                                            <input type="text" name="product_size_en"
+                                                value="{{ $product->product_tags_ar }}" class="form-control"
                                                 data-role="tagsinput">
                                             @error('product_size_en')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -280,7 +289,8 @@
                                     <div class="form-group">
                                         <h5>Product Selling Price <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="selling_price" value="{{ $product->selling_price }}" class="form-control">
+                                            <input type="text" name="selling_price"
+                                                value="{{ $product->selling_price }}" class="form-control">
                                             @error('selling_price')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -297,7 +307,8 @@
                                     <div class="form-group">
                                         <h5>Product Discount Price <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="discount_price" value="{{ $product->discount_price }}" class="form-control">
+                                            <input type="text" name="discount_price"
+                                                value="{{ $product->discount_price }}" class="form-control">
                                             @error('discount_price')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -373,12 +384,12 @@
                                         <div class="controls">
                                             <fieldset>
                                                 <input type="checkbox" id="checkbox_2" name="hot_deals"
-                                                {{ ($product->hot_deals == 1) ? 'checked' : '' }} value="1">
+                                                    {{ $product->hot_deals == 1 ? 'checked' : '' }} value="1">
                                                 <label for="checkbox_2">Hot Deals</label>
                                             </fieldset>
                                             <fieldset>
                                                 <input type="checkbox" id="checkbox_3" name="featured"
-                                                {{ ($product->featured == 1) ? 'checked' : '' }} value="1">
+                                                    {{ $product->featured == 1 ? 'checked' : '' }} value="1">
                                                 <label for="checkbox_3">Featured</label>
                                             </fieldset>
                                         </div>
@@ -391,12 +402,12 @@
                                         <div class="controls">
                                             <fieldset>
                                                 <input type="checkbox" id="checkbox_4" name="special_offer"
-                                                {{ ($product->special_offer == 1) ? 'checked' : '' }} value="1">
+                                                    {{ $product->special_offer == 1 ? 'checked' : '' }} value="1">
                                                 <label for="checkbox_4">Special Offer</label>
                                             </fieldset>
                                             <fieldset>
                                                 <input type="checkbox" id="checkbox_5" name="special_deals"
-                                                {{ ($product->special_deals == 1) ? 'checked' : '' }} value="1">
+                                                    {{ $product->special_deals == 1 ? 'checked' : '' }} value="1">
                                                 <label for="checkbox_5">Special Deals</label>
                                             </fieldset>
                                         </div>
@@ -421,6 +432,122 @@
 
     </section>
     <!-- /.content -->
+
+    <section class="content">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="box bt-3 border-warning">
+                    <div class="box-header">
+                        <h4 class="box-title">Product Multiple Image <strong>Update</strong></h4>
+                    </div>
+
+
+                    <form method="POST" action="{{ route('admin.update-product-imgs') }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="row row-sm">
+                            @foreach ($productImgs as $img)
+                                <div class="col-md-3">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <div class="card">
+                                        <img src="{{ asset($img->img_name) }}" class="card-img-top"
+                                            style="height: 130px; width: 280px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <a href="{{ route('delete-product-img', $img->id) }}" class="btn btn-sm btn-danger" id="delete"
+                                                    title="Delete Image"><i class="fa fa-trash"></i> </a>
+                                            </h5>
+                                            <p class="card-text">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Change Image <span
+                                                        class="tx-danger">*</span></label>
+                                                <input class="form-control" type="file"
+                                                    name="multi_img[{{ $img->id }}]">
+                                            </div>
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                </div><!--  end col md 3		 -->
+                            @endforeach
+
+                        </div>
+
+                        <div class="text-xs-right">
+                            <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update Image">
+                        </div>
+                        <br><br>
+
+
+
+                    </form>
+
+
+
+
+
+                </div>
+            </div>
+
+
+
+        </div> <!-- // end row  -->
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="box bt-3 border-info">
+                    <div class="box-header">
+                        <h4 class="box-title">Product Thumbnail <strong>Update</strong></h4>
+                    </div>
+
+                    <form method="post" action="{{ route('admin.update-thumb') }}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <div class="row row-sm">
+
+                            <div class="col-md-3">
+
+                                <div class="card">
+                                    <img src="{{ asset($product->product_thumbnail) }}" class="card-img-top"
+                                        style="height: 130px; width: 280px;">
+                                    <div class="card-body">
+
+                                        <p class="card-text">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Change Image <span
+                                                    class="tx-danger">*</span></label>
+                                            <input type="file" name="product_thumbnail" class="form-control"
+                                                onChange="mainThumb(this)">
+                                            <img src="" id="product_thumb">
+                                            @error('product_thumbnail')
+                                                <span class="text-danger">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                            </div><!--  end col md 3		 -->
+
+                        </div>
+
+                        <div class="text-xs-right">
+                            <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update Image">
+                        </div>
+                        <br><br>
+                    </form>
+                </div>
+            </div>
+
+        </div> <!-- // end row  -->
+
+    </section>
 @endsection
 
 @section('js')

@@ -116,6 +116,22 @@ Route::prefix('admin')->group(function () {
                 Route::get('/manage', 'viewProducts')->name('admin.manage-products');
                 // route for edit product page
                 Route::get('/edit/{id}', 'edit')->name('admin.edit-product');
+                // route for update product
+                Route::post('/update', 'updateProduct')->name('admin.update-product');
+                // Route for update product multiple images
+                Route::post('/update-imgs', 'updateImgs')->name('admin.update-product-imgs');
+                // Route for update product main thumbnail
+                Route::post('/update-thumb', 'updateProductThumb')
+                    ->name('admin.update-thumb');
+
+                Route::get('/delete-img/{img_id}', 'deleteImg')->name('delete-product-img');
+                // Deactivate Product
+                Route::get('/deactivate/{id}', 'deactivate')->name('deactivate.product');
+                // Activate Product
+                Route::get('/activate/{id}', 'activate')->name('activate.product');
+
+                // Delete product with its images
+                Route::get('/delete/{id}', 'delete')->name('admin.product-delete');
 
             });
 

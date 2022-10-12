@@ -41,7 +41,7 @@ class ValidProduct extends FormRequest
             'product_color_ar' => 'required',
             'selling_price' => 'required|numeric',
             'discount_price' => 'required|numeric',
-            'product_thumbnail' => 'required|mimes:jpg,png',
+            'product_thumbnail' => 'mimes:jpg,png',
             'product_overview_en' => 'required',
             'product_overview_ar' => 'required',
             'product_description_en' => 'required',

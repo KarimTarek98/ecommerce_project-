@@ -30,6 +30,8 @@ Manage Products | Admin Dashboard
                                             <th>Product Name En</th>
                                             <th>Product Name Ar </th>
                                             <th>Quantity </th>
+                                            <th>Discount </th>
+                                            <th>Status </th>
                                             <th>Action</th>
 
                                         </tr>
@@ -42,12 +44,51 @@ Manage Products | Admin Dashboard
                                                 <td>{{ $product->product_name_en }}</td>
                                                 <td>{{ $product->product_name_ar }}</td>
                                                 <td>{{ $product->product_qty }}</td>
+
+                                                @if (isset($product->discount_price))
+                                                @php
+                                                $discount = ($product->selling_price - $product->discount_price) / $product->selling_price;
+                                                $discountPercent = $discount * 100;
+                                                @endphp
+                                                <td>
+                                                    <span class="badge badge-info">{{ round($discountPercent) }}%</span>
+                                                </td>
+                                                @else
+                                                <td>
+                                                    <span class="badge badge-danger">No Discount</span>
+                                                </td>
+                                                @endif
+
+
+                                                @if ($product->status == 1)
+                                                    <td>
+                                                        <span class="badge badge-success">Active</span>
+                                                    </td>
+                                                @else
+                                                <td>
+                                                    <span class="badge badge-danger">Inactive</span>
+                                                </td>
+                                                @endif
+
                                                 <td>
                                                     <a href="{{ route('admin.edit-product', $product->id) }}" class="btn btn-success"
                                                         title="Edit Product"><i class="fa fa-pencil"></i> </a>
-                                                    <a href=""
+                                                    <a href="{{ route('admin.product-delete', $product->id) }}"
                                                         class="btn btn-danger" title="Delete Product" id="delete">
-                                                        <i class="fa fa-trash"></i></a>
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+
+                                                    @if ($product->status == 1)
+                                                    <a href="{{ route('deactivate.product', $product->id) }}"
+                                                        class="btn btn-danger" title="Deactivate">
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    </a>
+                                                    @else
+                                                    <a href="{{ route('activate.product', $product->id) }}"
+                                                        class="btn btn-success" title="Activate">
+                                                        <i class="fa fa-arrow-up"></i>
+                                                    </a>
+                                                    @endif
                                                 </td>
 
                                             </tr>
