@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Home\LangController;
 use App\Http\Controllers\Home\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -42,5 +43,9 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/user/change-password', 'changePassword')->name('change-password.user');
     Route::post('/user/update-pass', 'updatePass')->name('update.user-password');
 });
+
+// Multilingual Routes
+Route::get('/en', [LangController::class, 'english'])->name('lang.en');
+Route::get('/ar', [LangController::class, 'arabic'])->name('lang.ar');
 
 

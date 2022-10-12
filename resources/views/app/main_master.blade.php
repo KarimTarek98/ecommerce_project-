@@ -15,6 +15,15 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
 
     <!-- Customizable CSS -->
+
+    {{-- if we have rtl styles we do that
+
+    @if (session()->get('lang') == 'en')
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/ltr.css') }}">
+    @else
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/rtl.css') }}">
+    @endif --}}
+
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/blue.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.carousel.css') }}">

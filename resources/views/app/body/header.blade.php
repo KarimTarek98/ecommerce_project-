@@ -6,15 +6,45 @@
             <div class="header-top-inner">
                 <div class="cnt-account">
                     <ul class="list-unstyled">
-                        <li><a href="#"><i class="icon fa fa-user"></i>My Account</a></li>
-                        <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-                        <li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-                        <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
+                        <li><a href="#"><i class="icon fa fa-user"></i>
+                            @if (session()->get('lang') == 'en')
+                            My Account
+                            @else
+                            حسابي
+                            @endif
+                        </a></li>
+                        <li><a href="#"><i class="icon fa fa-heart"></i>
+                            @if (session()->get('lang') == 'en')
+                            Wishlist
+                            @else
+                            قائمة الرغبات
+                            @endif
+                        </a></li>
+                        <li><a href="#">
+                            @if (session()->get('lang') == 'en')
+                            My Cart <i class="icon fa fa-shopping-cart"></i>
+                            @else
+                            مشترياتي <i class="icon fa fa-shopping-cart"></i>
+                            @endif
+                        </a></li>
+                        <li><a href="#"><i class="icon fa fa-check"></i>
+                            @if (session()->get('lang') == 'en')
+                            Checkout
+                            @else
+                            الدفع
+                            @endif
+                        </a></li>
 
                         @auth
                             <li><a href="{{ route('dashboard') }}"><i class="icon fa fa-user"></i>Profile</a></li>
                         @else
-                            <li><a href="{{ url('/login') }}"><i class="icon fa fa-lock"></i>Login | Register</a></li>
+                            <li><a href="{{ url('/login') }}"><i class="icon fa fa-lock"></i>
+                                @if (session()->get('lang') == 'en')
+                                Login | Register
+                                @else
+                                حساب جديد | تسجيل
+                                @endif
+                            </a></li>
                         @endauth
                     </ul>
                 </div>
@@ -26,18 +56,26 @@
                                 data-hover="dropdown" data-toggle="dropdown"><span class="value">USD </span><b
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">USD</a></li>
-                                <li><a href="#">INR</a></li>
-                                <li><a href="#">GBP</a></li>
+                                <li><a href="#">EGP</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-small"> <a href="#" class="dropdown-toggle"
-                                data-hover="dropdown" data-toggle="dropdown"><span class="value">English </span><b
-                                    class="caret"></b></a>
+                        <li class="dropdown dropdown-small">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
+                                <span class="value">
+                                    @if (session()->get('lang') == 'ar')
+                                    اللغة
+                                    @else
+                                    Language
+                                    @endif
+                                </span>
+                                <b class="caret"></b>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">German</a></li>
+                                @if (session()->get('lang') == 'ar')
+                                <li><a href="{{ route('lang.en') }}">English</a></li>
+                                @else
+                                <li><a href="{{ route('lang.ar') }}">العربية</a></li>
+                                @endif
                             </ul>
                         </li>
                     </ul>
