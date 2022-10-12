@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SubSubCategoryController;
 use Illuminate\Support\Facades\Route;
@@ -133,6 +134,23 @@ Route::prefix('admin')->group(function () {
                 // Delete product with its images
                 Route::get('/delete/{id}', 'delete')->name('admin.product-delete');
 
+            });
+
+        });
+
+        // All Slider Routes
+        Route::prefix('sliders')->group(function () {
+
+            Route::controller(SliderController::class)->group(function () {
+                Route::get('/', 'allSliders')->name('admin.all-sliders');
+                Route::get('/add-slider', 'addSliderView')->name('admin.add-slider');
+                Route::post('/store-slider', 'storeSlider')->name('admin.store-slider');
+                Route::get('/edit/{id}', 'editSliderPage')->name('admin.edit-slider');
+                Route::post('/update-slider', 'updateSlider')->name('admin.update-slider');
+
+                Route::get('/deactivate/{id}', 'deActivate')->name('deactivate.slider');
+                Route::get('/activate/{id}', 'activate')->name('activate.slider');
+                Route::get('/delete/{id}', 'deleteSlider')->name('admin.delete-slider');
             });
 
         });
