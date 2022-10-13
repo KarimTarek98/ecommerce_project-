@@ -1073,7 +1073,8 @@
                                         <div class="products">
                                             <div class="product">
                                                 <div class="product-image">
-                                                    <div class="image"> <a href="detail.html"><img
+                                                    <div class="image"> <a
+                                                        href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}"><img
                                                                 src="{{ asset($product->product_thumbnail) }}"
                                                                 alt=""></a> </div>
                                                     <!-- /.image -->
@@ -1092,7 +1093,7 @@
 
                                                 <div class="product-info text-left">
                                                     <h3 class="name">
-                                                        <a href="detail.html">
+                                                        <a href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}">
                                                             {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
                                                         </a>
                                                     </h3>

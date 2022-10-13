@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Home\ProductDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Home\LangController;
@@ -47,5 +48,10 @@ Route::controller(UserController::class)->group(function () {
 // Multilingual Routes
 Route::get('/en', [LangController::class, 'english'])->name('lang.en');
 Route::get('/ar', [LangController::class, 'arabic'])->name('lang.ar');
+
+// Product Details Routes
+Route::controller(ProductDetailsController::class)->group(function () {
+    Route::get('/product-details/{id}/{slug}', 'index');
+});
 
 
