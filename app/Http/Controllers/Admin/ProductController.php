@@ -137,6 +137,7 @@ class ProductController extends Controller
         $productId = $request->product_id;
 
         $productToUpdate = Product::findOrFail($productId);
+        rename(public_path('uploads/products/product-multi-imgs/'. $productToUpdate->product_name_en), public_path('uploads/products/product-multi-imgs/'. $request->product_name_en));
 
         $productToUpdate->update([
             'partner_id' => $request->partner_id,

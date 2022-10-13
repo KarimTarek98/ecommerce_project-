@@ -32,7 +32,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Sliders List</h3>
                         <a href="{{ route('admin.add-slider') }}" class="btn btn-rounded btn-primary mb-5" style="float: right;">
-                            Add New Partner
+                            Add New Slider
                         </a>
                     </div>
                     <!-- /.box-header -->
