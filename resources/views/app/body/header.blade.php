@@ -62,19 +62,19 @@
                         <li class="dropdown dropdown-small">
                             <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
                                 <span class="value">
-                                    @if (session()->get('lang') == 'ar')
-                                        اللغة
+                                    @if (session()->get('lang') == 'en')
+                                    Language
                                     @else
-                                        Language
+                                        اللغة
                                     @endif
                                 </span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                @if (session()->get('lang') == 'ar')
-                                    <li><a href="{{ route('lang.en') }}">English</a></li>
-                                @else
+                                @if (session()->get('lang') == 'en')
                                     <li><a href="{{ route('lang.ar') }}">العربية</a></li>
+                                @else
+                                    <li><a href="{{ route('lang.en') }}">English</a></li>
                                 @endif
                             </ul>
                         </li>
