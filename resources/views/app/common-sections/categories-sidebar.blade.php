@@ -3,12 +3,12 @@
     <nav class="yamm megamenu-horizontal">
         <ul class="nav">
 
-            
+
             @foreach ($categories as $category)
             <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle"
                     data-toggle="dropdown"><i class="icon {{ $category->category_icon }}"
                         aria-hidden="true"></i>
-                        {{ (session()->get('lang') == 'en') ? $category->category_name_en : $category->category_name_ar }}
+                        {{ (session()->get('lang') == 'ar') ? $category->category_name_ar : $category->category_name_en }}
                     </a>
                 <ul class="dropdown-menu mega-menu">
                     <li class="yamm-content">
@@ -21,10 +21,10 @@
                             @foreach ($subCategories as $subCategory)
                             <div class="col-sm-12 col-md-3">
                                 <h2 class="title">
-                                    @if (session()->get('lang') == 'en')
-                                        {{ $subCategory->subcategory_name_en }}
-                                    @else
+                                    @if (session()->get('lang') == 'ar')
                                         {{ $subCategory->subcategory_name_ar }}
+                                    @else
+                                        {{ $subCategory->subcategory_name_en }}
                                     @endif
 
                                 </h2>
@@ -36,7 +36,7 @@
                                     @foreach ($subSubCategories as $subSubCategory)
                                     <li>
                                         <a href="#">
-                                            {{ (session()->get('lang') == 'en') ? $subSubCategory->sub_sub_category_name_en : $subSubCategory->sub_sub_category_name_ar }}
+                                            {{ (session()->get('lang') == 'ar') ? $subSubCategory->sub_sub_category_name_ar : $subSubCategory->sub_sub_category_name_en }}
                                         </a>
                                     </li>
                                     @endforeach

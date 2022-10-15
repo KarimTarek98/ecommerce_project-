@@ -438,7 +438,7 @@
                             <div class="col-sm-6 col-md-7 product-info-block">
                                 <div class="product-info">
                                     <h1 class="name">
-                                        {{ session()->get('lang') == 'en' ? $product->product_name_en : $product->product_name_ar }}
+                                        {{ session()->get('lang') == 'ar' ? $product->product_name_ar : $product->product_name_en }}
                                     </h1>
 
                                     <div class="rating-reviews m-t-20">
@@ -481,7 +481,7 @@
                                     </div><!-- /.stock-container -->
 
                                     <div class="description-container m-t-20">
-                                        {{ session()->get('lang') == 'en' ? $product->product_overview_en : $product->product_overview_ar }}
+                                        {{ session()->get('lang') == 'ar' ? $product->product_overview_ar : $product->product_overview_en }}
                                     </div><!-- /.description-container -->
 
                                     <div class="price-container info-container m-t-20">
@@ -579,10 +579,10 @@
                                     <div id="description" class="tab-pane in active">
                                         <div class="product-tab">
                                             <p class="text">
-                                                @if (session()->get('lang') == 'en')
-                                                    {!! $product->product_description_en !!}
-                                                @else
+                                                @if (session()->get('lang') == 'ar')
                                                     {!! $product->product_description_ar !!}
+                                                @else
+                                                    {!! $product->product_description_en !!}
                                                 @endif
                                             </p>
                                         </div>

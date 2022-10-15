@@ -7,31 +7,31 @@
                 <div class="cnt-account">
                     <ul class="list-unstyled">
                         <li><a href="#"><i class="icon fa fa-user"></i>
-                                @if (session()->get('lang') == 'en')
-                                    My Account
+                                @if (session()->get('lang') == 'ar')
+                                حسابي
                                 @else
-                                    حسابي
+                                My Account
                                 @endif
                             </a></li>
                         <li><a href="#"><i class="icon fa fa-heart"></i>
-                                @if (session()->get('lang') == 'en')
-                                    Wishlist
+                                @if (session()->get('lang') == 'ar')
+                                قائمة الرغبات
                                 @else
-                                    قائمة الرغبات
+                                Wishlist
                                 @endif
                             </a></li>
                         <li><a href="#">
-                                @if (session()->get('lang') == 'en')
-                                    My Cart <i class="icon fa fa-shopping-cart"></i>
+                                @if (session()->get('lang') == 'ar')
+                                مشترياتي <i class="icon fa fa-shopping-cart"></i>
                                 @else
-                                    مشترياتي <i class="icon fa fa-shopping-cart"></i>
+                                My Cart <i class="icon fa fa-shopping-cart"></i>
                                 @endif
                             </a></li>
                         <li><a href="#"><i class="icon fa fa-check"></i>
-                                @if (session()->get('lang') == 'en')
-                                    Checkout
+                                @if (session()->get('lang') == 'ar')
+                                الدفع
                                 @else
-                                    الدفع
+                                Checkout
                                 @endif
                             </a></li>
 
@@ -39,10 +39,11 @@
                             <li><a href="{{ route('dashboard') }}"><i class="icon fa fa-user"></i>Profile</a></li>
                         @else
                             <li><a href="{{ url('/login') }}"><i class="icon fa fa-lock"></i>
-                                    @if (session()->get('lang') == 'en')
-                                        Login | Register
+                                    @if (session()->get('lang') == 'ar')
+                                    حساب جديد | تسجيل
+
                                     @else
-                                        حساب جديد | تسجيل
+                                    Login | Register
                                     @endif
                                 </a></li>
                         @endauth
@@ -62,19 +63,19 @@
                         <li class="dropdown dropdown-small">
                             <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
                                 <span class="value">
-                                    @if (session()->get('lang') == 'en')
-                                    Language
+                                    @if (session()->get('lang') == 'ar')
+                                    اللغة
                                     @else
-                                        اللغة
+                                    Language
                                     @endif
                                 </span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                @if (session()->get('lang') == 'en')
-                                    <li><a href="{{ route('lang.ar') }}">العربية</a></li>
-                                @else
+                                @if (session()->get('lang') == 'ar')
                                     <li><a href="{{ route('lang.en') }}">English</a></li>
+                                @else
+                                    <li><a href="{{ route('lang.ar') }}">العربية</a></li>
                                 @endif
                             </ul>
                         </li>
@@ -212,10 +213,10 @@
                             <ul class="nav navbar-nav">
                                 <li class="active dropdown yamm-fw"> <a href="home.html" data-hover="dropdown"
                                         class="dropdown-toggle" data-toggle="dropdown">
-                                        @if (session()->get('lang') == 'en')
-                                            Home
+                                        @if (session()->get('lang') == 'ar')
+                                        الرئيسية
                                         @else
-                                            الرئيسية
+                                        Home
                                         @endif
                                     </a>
                                 </li>
@@ -227,10 +228,10 @@
                                 @foreach ($categories as $category)
                                     <li class="dropdown yamm mega-menu"> <a href="home.html" data-hover="dropdown"
                                             class="dropdown-toggle" data-toggle="dropdown">
-                                            @if (session()->get('lang') == 'en')
-                                                {{ $category->category_name_en }}
-                                            @else
+                                            @if (session()->get('lang') == 'ar')
                                                 {{ $category->category_name_ar }}
+                                            @else
+                                                {{ $category->category_name_en }}
                                             @endif
 
                                         </a>
@@ -248,10 +249,10 @@
                                                         @foreach ($subCategories as $subCategory)
                                                             <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                                                                 <h2 class="title">
-                                                                    @if (session()->get('lang') == 'en')
-                                                                        {{ $subCategory->subcategory_name_en }}
-                                                                    @else
+                                                                    @if (session()->get('lang') == 'ar')
                                                                         {{ $subCategory->subcategory_name_ar }}
+                                                                    @else
+                                                                        {{ $subCategory->subcategory_name_en }}
                                                                     @endif
 
                                                                 </h2>
@@ -263,10 +264,10 @@
                                                                     @endphp
                                                                     @foreach ($subSubCategories as $subSubCategory)
                                                                         <li><a href="#">
-                                                                                @if (session()->get('lang') == 'en')
-                                                                                    {{ $subSubCategory->sub_sub_category_name_en }}
-                                                                                @else
+                                                                                @if (session()->get('lang') == 'ar')
                                                                                     {{ $subSubCategory->sub_sub_category_name_ar }}
+                                                                                @else
+                                                                                    {{ $subSubCategory->sub_sub_category_name_en }}
                                                                                 @endif
 
                                                                             </a></li>
@@ -291,10 +292,11 @@
                                 @endforeach
 
                                 <li class="dropdown  navbar-right special-menu"> <a href="#">
-                                        @if (session()->get('lang') == 'en')
-                                            Todays offer
+                                        @if (session()->get('lang') == 'ar')
+                                        عروض اليوم
+
                                         @else
-                                            عروض اليوم
+                                        Todays offer
                                         @endif
                                     </a>
                                 </li>

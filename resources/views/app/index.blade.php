@@ -67,7 +67,7 @@
                                 <div class="product-info text-left m-t-20">
                                     <h3 class="name">
                                         <a href="{{ url('product-details/' . $deal->id . '/' . $deal->product_slug_en) }}">
-                                            {{ (session()->get('lang') == 'en') ? $deal->product_name_en : $deal->product_name_ar  }}
+                                            {{ (session()->get('lang') == 'ar') ? $deal->product_name_ar : $deal->product_name_en  }}
                                         </a>
                                     </h3>
                                     <div class="rating rateit-small"></div>
@@ -144,7 +144,7 @@
                                                     <div class="product-info">
                                                         <h3 class="name">
                                                             <a href="{{ url('product-details/' . $offer->id . '/' . $offer->product_slug_en) }}">
-                                                                {{ (session()->get('lang') == 'en') ? $offer->product_name_en : $offer->product_name_ar }}
+                                                                {{ (session()->get('lang') == 'ar') ? $offer->product_name_ar : $offer->product_name_en }}
                                                             </a>
                                                         </h3>
                                                         <div class="rating rateit-small"></div>
@@ -218,7 +218,7 @@
                                                     <div class="product-info">
                                                         <h3 class="name">
                                                             <a href="{{ url('product-details/' . $specialDeal->id . '/' . $specialDeal->product_slug_en) }}">
-                                                                {{ (session()->get('lang') == 'en') ? $specialDeal->product_name_en : $specialDeal->product_name_ar  }}
+                                                                {{ (session()->get('lang') == 'ar') ? $specialDeal->product_name_ar : $specialDeal->product_name_en  }}
                                                             </a>
                                                         </h3>
                                                         <div class="rating rateit-small"></div>
@@ -377,7 +377,7 @@
                             @foreach ($categories as $category)
                             <li><a data-transition-type="backSlide" href="#cat{{ $category->id }}"
                                     data-toggle="tab">
-                                    {{ (session()->get('lang') == 'en') ? $category->category_name_en : $category->category_name_ar }}
+                                    {{ (session()->get('lang') == 'ar') ? $category->category_name_ar : $category->category_name_en }}
                                 </a></li>
                             @endforeach
 
@@ -420,7 +420,7 @@
                                                 <div class="product-info text-left">
                                                     <h3 class="name">
                                                         <a href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}">
-                                                            {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
+                                                            {{ (session()->get('lang') == 'ar') ? $product->product_name_ar : $product->product_name_en }}
                                                         </a>
                                                     </h3>
                                                     <div class="rating rateit-small"></div>
@@ -513,7 +513,7 @@
                                                 <div class="product-info text-left">
                                                     <h3 class="name">
                                                         <a href="detail.html">
-                                                            {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
+                                                            {{ (session()->get('lang') == 'ar') ? $product->product_name_ar : $product->product_name_en }}
                                                         </a>
                                                     </h3>
                                                     <div class="rating rateit-small"></div>
@@ -646,7 +646,7 @@
                                     <div class="product-info text-left">
                                         <h3 class="name">
                                             <a href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}">
-                                                {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
+                                                {{ (session()->get('lang') == 'ar') ? $product->product_name_ar : $product->product_name_en }}
                                             </a>
                                         </h3>
                                         <div class="rating rateit-small"></div>
@@ -702,7 +702,7 @@
                 <!-- ============================================== Fashion PRODUCTS : END ============================================== -->
                 <section class="section featured-product wow fadeInUp">
                     <h3 class="section-title">
-                        {{ (session()->get('lang') == 'en') ? $category1->category_name_en : $category1->category_name_ar }}
+                        {{ (session()->get('lang') == 'ar') ? $category1->category_name_ar : $category1->category_name_en }}
                     </h3>
                     <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
 
@@ -731,7 +731,7 @@
                                     <div class="product-info text-left">
                                         <h3 class="name">
                                             <a href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}">
-                                                {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
+                                                {{ (session()->get('lang') == 'ar') ? $product->product_name_ar : $product->product_name_en }}
                                             </a>
                                         </h3>
                                         <div class="rating rateit-small"></div>
@@ -784,7 +784,7 @@
 
                 <section class="section featured-product wow fadeInUp">
                     <h3 class="section-title">
-                        {{ (session()->get('lang') == 'en') ? $category2->category_name_en : $category2->category_name_ar }}
+                        {{ (session()->get('lang') == 'ar') ? $category2->category_name_ar : $category2->category_name_en }}
                     </h3>
                     <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
 
@@ -813,7 +813,7 @@
                                     <div class="product-info text-left">
                                         <h3 class="name">
                                             <a href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}">
-                                                {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
+                                                {{ (session()->get('lang') == 'ar') ? $product->product_name_ar : $product->product_name_en }}
                                             </a>
                                         </h3>
                                         <div class="rating rateit-small"></div>

@@ -28,7 +28,7 @@
                                             <div class="accordion-heading">
                                                 <a href="#collapse{{ $category->id }}" data-toggle="collapse"
                                                     class="accordion-toggle collapsed">
-                                                    {{ (session()->get('lang') == 'en') ? $category->category_name_en : $category->category_name_ar }}
+                                                    {{ (session()->get('lang') == 'ar') ? $category->category_name_ar : $category->category_name_en }}
                                                 </a>
                                             </div>
                                             <!-- /.accordion-heading -->
@@ -42,7 +42,7 @@
                                                         @foreach ($subCategories as $subCategory)
                                                         <li>
                                                             <a href="#">
-                                                                {{ (session()->get('lang') == 'en') ? $subCategory->subcategory_name_en : $subCategory->subcategory_name_ar }}
+                                                                {{ (session()->get('lang') == 'ar') ? $subCategory->subcategory_name_ar : $subCategory->subcategory_name_en }}
                                                             </a>
                                                         </li>
                                                         @endforeach
@@ -274,7 +274,7 @@
                                                     <div class="product-info text-left">
                                                         <h3 class="name">
                                                             <a href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}">
-                                                                {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
+                                                                {{ (session()->get('lang') == 'ar') ? $product->product_name_ar : $product->product_name_en }}
                                                             </a>
 
                                                         </h3>
@@ -359,7 +359,7 @@
                                                         <div class="product-info">
                                                             <h3 class="name">
                                                                 <a href="{{ url('product-details/' . $product->id . '/' . $product->product_slug_en) }}">
-                                                                    {{ (session()->get('lang') == 'en') ? $product->product_name_en : $product->product_name_ar }}
+                                                                    {{ (session()->get('lang') == 'ar') ? $product->product_name_ar : $product->product_name_en }}
                                                                 </a>
                                                             </h3>
                                                             <div class="rating rateit-small"></div>
@@ -380,7 +380,7 @@
                                                             </div>
                                                             <!-- /.product-price -->
                                                             <div class="description m-t-10">
-                                                                {{ (session()->get('lang') == 'en') ? $product->product_overview_en : $product->product_overview_ar }}
+                                                                {{ (session()->get('lang') == 'ar') ? $product->product_overview_ar : $product->product_overview_en }}
                                                             </div>
                                                             <div class="cart clearfix animate-effect">
                                                                 <div class="action">

@@ -49,8 +49,8 @@ Route::controller(UserController::class)->group(function () {
 });
 
 // Multilingual Routes
-Route::get('/en', [LangController::class, 'english'])->name('lang.en');
 Route::get('/ar', [LangController::class, 'arabic'])->name('lang.ar');
+Route::get('/en', [LangController::class, 'english'])->name('lang.en');
 
 // Product Details Routes
 Route::controller(ProductDetailsController::class)->group(function () {
