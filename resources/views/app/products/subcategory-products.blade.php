@@ -1,7 +1,7 @@
 @extends('app.main_master')
 
 @section('title')
-    Product By Tags | Starbuy Store
+    Products | Starbuy Store
 @endsection
 
 @section('content')
@@ -248,7 +248,7 @@
                                 <div class="category-product">
                                     <div class="row">
 
-                                        @foreach ($tagProducts as $product)
+                                        @foreach ($products as $product)
                                         <div class="col-sm-6 col-md-4 wow fadeInUp">
                                             <div class="products">
                                                 <div class="product">
@@ -341,7 +341,7 @@
                             <div class="tab-pane " id="list-container">
                                 <div class="category-product">
 
-                                    @foreach ($tagProducts as $product)
+                                    @foreach ($products as $product)
                                     <div class="category-product-inner wow fadeInUp">
                                         <div class="products">
                                             <div class="product-list product">
@@ -441,7 +441,7 @@
                             <div class="text-right">
                                 <div class="pagination-container">
 
-                                    {{ $tagProducts->links() }}
+                                    {{ $products->links() }}
                                     <!-- /.list-inline -->
                                 </div>
                                 <!-- /.pagination-container -->

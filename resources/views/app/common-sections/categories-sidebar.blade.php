@@ -20,14 +20,16 @@
 
                             @foreach ($subCategories as $subCategory)
                             <div class="col-sm-12 col-md-3">
-                                <h2 class="title">
-                                    @if (session()->get('lang') == 'ar')
-                                        {{ $subCategory->subcategory_name_ar }}
-                                    @else
-                                        {{ $subCategory->subcategory_name_en }}
-                                    @endif
+                                <a href="{{ url('products/' . $subCategory->id . '/' . $subCategory->subcategory_name_en) }}">
+                                    <h2 class="title">
+                                        @if (session()->get('lang') == 'ar')
+                                            {{ $subCategory->subcategory_name_ar }}
+                                        @else
+                                            {{ $subCategory->subcategory_name_en }}
+                                        @endif
 
-                                </h2>
+                                    </h2>
+                                </a>
                                 <ul class="links list-unstyled">
                                     @php
                                         $subSubCategories = App\Models\SubSubCategory::where('subcategory_id', $subCategory->id)
@@ -35,7 +37,7 @@
                                     @endphp
                                     @foreach ($subSubCategories as $subSubCategory)
                                     <li>
-                                        <a href="#">
+                                        <a href="{{ url('products/sub&sub/' . $subSubCategory->id . '/' . $subSubCategory->sub_sub_category_slug_en) }}">
                                             {{ (session()->get('lang') == 'ar') ? $subSubCategory->sub_sub_category_name_ar : $subSubCategory->sub_sub_category_name_en }}
                                         </a>
                                     </li>

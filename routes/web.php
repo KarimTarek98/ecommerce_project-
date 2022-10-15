@@ -26,6 +26,10 @@ Route::get('/', [IndexController::class, 'index']);
 
 Route::controller(IndexController::class)->group(function () {
     Route::get('/products/{tag}', 'productsByTags');
+    // To get all products by subcategory
+    Route::get('/products/{subcat_id}/{slug}', 'subCategoriesProducts');
+    // To get all product by sub-subcategory
+    Route::get('/products/sub&sub/{sub_subcat_id}/{slug}', 'subSubCatProducts');
 });
 
 
@@ -56,5 +60,9 @@ Route::get('/en', [LangController::class, 'english'])->name('lang.en');
 Route::controller(ProductDetailsController::class)->group(function () {
     Route::get('/product-details/{id}/{slug}', 'index');
 });
+
+
+
+
 
 
