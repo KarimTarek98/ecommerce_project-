@@ -3,6 +3,7 @@
 use App\Http\Controllers\Home\ProductDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Home\IndexController;
 use App\Http\Controllers\Home\LangController;
 use App\Http\Controllers\Home\UserController;
 use App\Models\User;
@@ -21,8 +22,10 @@ use Illuminate\Support\Facades\Auth;
 
 
 // Homepage
-Route::get('/', function () {
-    return view('app.index');
+Route::get('/', [IndexController::class, 'index']);
+
+Route::controller(IndexController::class)->group(function () {
+    Route::get('/products/{tag}', 'productsByTags');
 });
 
 
