@@ -30,6 +30,8 @@ Route::controller(IndexController::class)->group(function () {
     Route::get('/products/{subcat_id}/{slug}', 'subCategoriesProducts');
     // To get all product by sub-subcategory
     Route::get('/products/sub&sub/{sub_subcat_id}/{slug}', 'subSubCatProducts');
+    // fetch product info with ajax
+    Route::get('/product/cart/modal/{id}', 'productInfoAjax');
 });
 
 

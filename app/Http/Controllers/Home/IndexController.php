@@ -63,4 +63,38 @@ class IndexController extends Controller
 
 
     }
+
+    public function productInfoAjax($id)
+    {
+        $product = Product::with('category', 'partner')->findOrFail($id);
+
+        if ($product->product_color_en != null)
+        {
+            $productColors = explode(',', $product->product_color_en);
+        }
+        else
+        {
+            $productColors = '';
+        }
+
+        if ($product->product_size_en != null)
+        {
+            $productSizes = explode(',', $product->product_size_en);
+        }
+        else
+        {
+            $productSizes = '';
+        }
+
+
+
+        $productSizes = explode(',', $product->product_size_en);
+
+        return response()->json([
+            'product' => $product,
+            'colors' => $productColors,
+            'sizes' => $productSizes
+        ]);
+
+    }
 }
