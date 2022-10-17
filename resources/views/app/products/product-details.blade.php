@@ -158,7 +158,7 @@
                             </div><!-- /.gallery-holder -->
                             <div class="col-sm-6 col-md-7 product-info-block">
                                 <div class="product-info">
-                                    <h1 class="name">
+                                    <h1 class="name" id="product_name">
                                         {{ session()->get('lang') == 'ar' ? $product->product_name_ar : $product->product_name_en }}
                                     </h1>
 
@@ -248,7 +248,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="info-title control-label">Color <span>*</span></label>
-                                                <select class="form-control unicase-form-control selectpicker">
+                                                <select id="color" class="form-control unicase-form-control selectpicker">
                                                     <option selected disabled>--Select options--</option>
                                                     @foreach ($productColors as $color)
                                                     <option value="{{ $color }}">{{ $color }}</option>
@@ -264,7 +264,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="info-title control-label">Size <span>*</span></label>
-                                                <select class="form-control unicase-form-control selectpicker">
+                                                <select id="size" class="form-control unicase-form-control selectpicker">
                                                     <option selected disabled>--Select options--</option>
                                                     @foreach ($productSizes as $size)
                                                     <option value="{{ $size }}">{{ $size }}</option>
@@ -286,20 +286,15 @@
                                             <div class="col-sm-2">
                                                 <div class="cart-quantity">
                                                     <div class="quant-input">
-                                                        <div class="arrows">
-                                                            <div class="arrow plus gradient"><span class="ir"><i
-                                                                        class="icon fa fa-sort-asc"></i></span></div>
-                                                            <div class="arrow minus gradient"><span class="ir"><i
-                                                                        class="icon fa fa-sort-desc"></i></span></div>
-                                                        </div>
-                                                        <input type="text" value="1">
+
+                                                        <input type="number" class="form-control" id="quantity" value="1" min="1">
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <input type="hidden" id="product_id" value="{{ $product->id }}">
                                             <div class="col-sm-7">
-                                                <a href="#" class="btn btn-primary"><i
-                                                        class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                                                <button type="submit" onclick="addToCart()" class="btn btn-primary"><i
+                                                        class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
                                             </div>
 
 

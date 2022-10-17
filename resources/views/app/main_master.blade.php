@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="keywords" content="MediaCenter, Template, eCommerce">
     <meta name="robots" content="all">
     <title>@yield('title')</title>
@@ -97,6 +97,7 @@
     <script src="{{ asset('frontend/assets/js/jquery.rateit.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('frontend/assets/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/bootstrap-select.min.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/scripts.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
@@ -124,7 +125,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><strong id="product_name"></strong></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" id="close_btn" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -155,8 +156,10 @@
                                 <li class="list-group-item">Category: <span id="product_category"></span></li>
                                 <li class="list-group-item">Brand: <span id="product_brand"></span></li>
                                 <li class="list-group-item">Stock
-                                    <span class="badge badge-pill badge-success" id="available" style="background: green; color: white;"></span>
-                                    <span class="badge badge-pill badge-danger" id="not_available" style="background: red; color: white;"></span>
+                                    <span class="badge badge-pill badge-success" id="available"
+                                        style="background: green; color: white;"></span>
+                                    <span class="badge badge-pill badge-danger" id="not_available"
+                                        style="background: red; color: white;"></span>
                                 </li>
                             </ul>
 
@@ -165,28 +168,30 @@
                         <div class="col-md-4">
 
                             <div class="form-group" id="product_color">
-                                <label for="exampleFormControlSelect1">Choose Color</label>
-                                <select class="form-control" name="product_colors" id="exampleFormControlSelect1">
+                                <label for="color">Choose Color</label>
+                                <select class="form-control" name="product_colors" id="color">
 
 
                                 </select>
                             </div>
 
                             <div class="form-group" id="product_size">
-                                <label for="exampleFormControlSelect1">Choose Size</label>
-                                <select class="form-control" name="product_size" id="exampleFormControlSelect1">
+                                <label for="size">Choose Size</label>
+                                <select class="form-control" name="product_size" id="size">
 
 
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleFormControlInput1">Quantity</label>
-                                <input type="number" class="form-control" id="exampleFormControlInput1" value="1"
+                                <label for="quantity">Quantity</label>
+                                <input type="number" class="form-control" id="quantity" value="1"
                                     min="1">
                             </div> <!-- // end form group -->
-
-                            <button type="submit" class="btn btn-primary mb-2">Add to Cart</button>
+                            <input type="hidden" id="product_id">
+                            <button type="submit" class="btn btn-primary mb-2" onclick="addToCart()">
+                                Add to Cart
+                            </button>
 
                         </div><!-- // end col md -->
 
@@ -201,77 +206,195 @@
 
     <script type="text/javascript">
         $.ajaxSetup({
-            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         });
 
-        function getProduct(id)
-        {
+        function getProduct(id) {
             $.ajax({
                 'type': 'GET',
                 'url': '/product/cart/modal/' + id,
                 dataType: 'json',
-                success: function (data) {
+                success: function(data) {
                     $('#product_img').attr('src', '/' + data.product.product_thumbnail);
                     //$('#product_price').text(data.product.selling_price);
                     $('#product_code').text(data.product.product_code);
                     $('#product_category').text(data.product.category.category_name_en);
                     $('#product_brand').text(data.product.partner.partner_name_en);
                     $('#product_name').text(data.product.product_name_en);
+                    $('#product_id').val(id);
 
                     // color
                     $('select[name="product_colors"]').empty();
-                    $.each(data.colors, function (key, value) {
-                            $('select[name="product_colors"]').append('<option value="' + value + '">' + value + '</option>');
-                        });
-                    if (data.colors != '')
-                    {
+                    $.each(data.colors, function(key, value) {
+                        $('select[name="product_colors"]').append('<option value="' + value + '">' +
+                            value + '</option>');
+                    });
+                    if (data.colors != '') {
                         $('#product_color').show();
-                    }
-                    else
-                    {
+                    } else {
                         $('#product_color').hide();
                     }
 
                     // size
                     $('select[name="product_size"]').empty();
-                    $.each(data.sizes, function (key, value) {
-                        $('select[name="product_size"]').append('<option value="' + value + '">' + value + '</option>');
+                    $.each(data.sizes, function(key, value) {
+                        $('select[name="product_size"]').append('<option value="' + value + '">' +
+                            value + '</option>');
                     });
-                    if (data.sizes != '')
-                    {
+                    if (data.sizes != '') {
                         $('#product_size').show();
-                    }
-                    else
-                    {
+                    } else {
                         $('#product_size').hide();
                     }
 
                     // Price
-                    if (data.product.discount_price != null)
-                    {
+                    if (data.product.discount_price != null) {
                         $('#new_price').text(data.product.discount_price);
                         $('#old_price').text(data.product.selling_price);
-                    }
-                    else
-                    {
+                    } else {
 
                         $('#new_price').text(data.product.selling_price);
                         $('#old_price').text('');
                     }
 
                     // Stock Availability
-                    if (data.product.product_qty > 0)
-                    {
+                    if (data.product.product_qty > 0) {
                         $('#available').text('Available');
                         $('#not_available').text('');
-                    }
-                    else
-                    {
+                    } else {
                         $('#available').text('');
                         $('#not_available').text('Not Available');
                     }
 
 
+                }
+            });
+        }
+
+        // Add To Cart function
+        function addToCart() {
+            var productName = $('#product_name').text();
+            var quantity = $('#quantity').val();
+            var id = $('#product_id').val();
+            var color = $('#color option:selected').text();
+            var size = $('#size option:selected').text();
+
+            $.ajax({
+                type: 'POST',
+                data: {
+
+                    product_name: productName,
+                    quantity: quantity,
+                    color: color,
+                    size: size
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                url: '/cart/add-product/' + id,
+                success: function(data) {
+                    shoppingCart();
+                    $('#close_btn').click();
+
+
+
+                    // after adding to cart fire sweetalert message
+                    const MSG = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 5000
+                    })
+
+                    // check if there is no errors then fire the message
+                    if ($.isEmptyObject(data.error)) {
+                        MSG.fire({
+                            type: 'success',
+                            title: data.success
+                        });
+                    } else {
+                        MSG.fire({
+                            type: 'error',
+                            title: data.error
+                        });
+                    }
+                }
+            });
+        }
+
+
+        // Shopping cart view
+        function shoppingCart() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/shoppin-cart/get',
+                success: function(response) {
+                    var cart = '';
+
+                    $('span[id="items_count"]').text(response.cartItems);
+                    $('span[id="total_price"]').text(response.total);
+                    $('span[id="sub_total"]').append(response.total);
+
+                    $.each(response.cart, function(key, value) {
+                        cart += `<div class="cart-item product-summary">
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="image"> <a href="detail.html"><img
+                        src="/${value.options.image}"
+                        alt=""></a> </div>
+        </div>
+        <div class="col-xs-7">
+            <h3 class="name"><a href="index.php?page-detail">${value.name}</a></h3>
+            <div class="price">EGP${value.price} x ${value.qty}</div>
+        </div>
+        <div class="col-xs-1 action"> <button type="submit" onclick="removeCart(this.id)" id="${value.rowId}"><i
+                    class="fa fa-trash"></i></button> </div>
+    </div>
+</div>
+<!-- /.cart-item -->
+<div class="clearfix"></div>
+<hr>`;
+
+$('#cart_items').html(cart);
+                    });
+                }
+            });
+        }
+        shoppingCart();
+
+        function removeCart(rowId) {
+            $.ajax({
+                type: 'GET',
+                url: '/cart/remove/' + rowId,
+                dataType: 'json',
+                success: function (data) {
+                    shoppingCart();
+
+                    const MSG = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 5000
+                    })
+
+                    if ($.isEmptyObject(data.error))
+                    {
+                        MSG.fire({
+                            type: 'success',
+                            title: data.success
+                        });
+                    }
+                    else
+                    {
+                        MSG.fire({
+                            type: 'error',
+                            title: data.error
+                        });
+                    }
                 }
             });
         }

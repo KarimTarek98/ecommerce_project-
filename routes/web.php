@@ -3,6 +3,7 @@
 use App\Http\Controllers\Home\ProductDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\IndexController;
 use App\Http\Controllers\Home\LangController;
 use App\Http\Controllers\Home\UserController;
@@ -33,6 +34,18 @@ Route::controller(IndexController::class)->group(function () {
     // fetch product info with ajax
     Route::get('/product/cart/modal/{id}', 'productInfoAjax');
 });
+
+Route::controller(CartController::class)->group(function () {
+    // Add to cart using ajax
+    Route::post('/cart/add-product/{id}', 'addToCart');
+    // Get shopping cart info ajax
+    Route::get('/shoppin-cart/get', 'shoppingCart');
+
+    // Remove cart item ajax
+    Route::get('/cart/remove/{rowId}', 'removeCartItem');
+});
+
+
 
 
 
