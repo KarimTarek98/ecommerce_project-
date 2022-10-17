@@ -7,6 +7,7 @@ use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\IndexController;
 use App\Http\Controllers\Home\LangController;
 use App\Http\Controllers\Home\UserController;
+use App\Http\Controllers\User\WishlistController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,18 @@ Route::controller(CartController::class)->group(function () {
 
     // Remove cart item ajax
     Route::get('/cart/remove/{rowId}', 'removeCartItem');
+
+    // add product to wishlist
+    Route::post('/wishlist/insert/{productId}', 'addToWishlist');
+});
+
+// Wishlist routes
+Route::middleware(['auth', 'user'])->group(function () {
+    Route::controller(WishlistController::class)->group(function () {
+        Route::get('/wishlist', 'wishlistView')->name('wishlist');
+        Route::get('/wishlist/get-items', 'wishlistGetItems');
+        Route::get('/wishlist/remove-item/{id}', 'removeItem');
+    });
 });
 
 

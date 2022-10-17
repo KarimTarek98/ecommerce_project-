@@ -398,6 +398,134 @@ $('#cart_items').html(cart);
                 }
             });
         }
+
+        // Adding product to user wishlist table
+        function addToWishlist(productId) {
+            $.ajax({
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                url: '/wishlist/insert/' + productId,
+                success: function (response) {
+
+                    const MSG = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 5000
+                    })
+
+                    if ($.isEmptyObject(response.error))
+                    {
+                        MSG.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: response.success
+                        });
+                    }
+                    else
+                    {
+                        MSG.fire({
+                            type: 'error',
+                            icon: 'error',
+                            title: response.error
+                        });
+                    }
+
+                }
+            });
+        }
+
+
+    </script>
+
+    <script type="text/javascript">
+    function getWishlistItems() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/wishlist/get-items',
+                success: function (data) {
+                    var items = '';
+
+                    $.each(data, function (key, value) {
+                        items += `<tr>
+                                <td class="col-md-2"><img src="/${value.products.product_thumbnail}" alt="imga"></td>
+                                <td class="col-md-7">
+                                    <div class="product-name">
+                                    <a href="#">
+                                        ${value.products.product_name_en}
+                                    </a></div>
+
+                                    <div class="price">
+                                        ${value.products.discount_price == null
+                                            ? `${value.products.selling_price}`
+                                            : `$${value.products.discount_price} <span>$${value.products.selling_price}</span>`
+                                        }
+
+                                    </div>
+                                    </td>
+                                        <td class="col-md-2">
+                                            <button class="btn btn-primary icon" type="button"
+                                            title="Add Cart" data-toggle="modal"
+                                            data-target="#exampleModal" id="${value.product_id}" onclick="getProduct(this.id)">
+                                            Add To Cart
+                                            </button>
+                                        </td>
+                                        <td class="col-md-1 close-btn">
+                                            <button type="submit" id="${value.id}"
+                                            onclick="wishlistRemoveItem(this.id)" class="">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
+                    });
+
+
+
+                    $('#wishlist_items').html(items);
+                }
+            });
+        }
+        getWishlistItems();
+
+        function wishlistRemoveItem(id)
+        {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/wishlist/remove-item/' + id,
+                success: function (response) {
+                    getWishlistItems();
+
+                    const MSG = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 5000
+                    })
+
+                    if ($.isEmptyObject(response.error))
+                    {
+                        MSG.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: response.success
+                        })
+                    }
+                    else
+                    {
+                        MSG.fire({
+                            type: 'error',
+                            icon: 'error',
+                            title: response.error
+                        })
+                    }
+                }
+            });
+        }
     </script>
 </body>
 
