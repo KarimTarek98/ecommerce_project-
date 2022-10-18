@@ -7,6 +7,7 @@ use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\IndexController;
 use App\Http\Controllers\Home\LangController;
 use App\Http\Controllers\Home\UserController;
+use App\Http\Controllers\User\MyCartController;
 use App\Http\Controllers\User\WishlistController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -51,15 +52,31 @@ Route::controller(CartController::class)->group(function () {
 
 // Wishlist routes
 Route::middleware(['auth', 'user'])->group(function () {
+
+    // Wish list routes with ajax
     Route::controller(WishlistController::class)->group(function () {
         Route::get('/wishlist', 'wishlistView')->name('wishlist');
         Route::get('/wishlist/get-items', 'wishlistGetItems');
         Route::get('/wishlist/remove-item/{id}', 'removeItem');
     });
+
 });
 
 
+// My Cart routes with ajax
+Route::controller(MyCartController::class)->group(function () {
+    Route::get('/my-cart', 'cartView')->name('my-cart');
 
+    Route::get('/my-cart/get-products', 'cartGetProducts');
+    // remove item from cart
+    Route::get('/cart/remove-item/{id}', 'removeCartItem');
+
+    // increment cart item quantity
+    Route::get('/increment-qty/{rowId}', 'incrementQty');
+
+    // decrement cart item quantity
+    Route::get('/decrement-qty/{rowId}', 'decrementQty');
+});
 
 
 // return user to dashboard if authenticated

@@ -336,7 +336,7 @@
 
                     $('span[id="items_count"]').text(response.cartItems);
                     $('span[id="total_price"]').text(response.total);
-                    $('span[id="sub_total"]').append(response.total);
+                    $('span[id="sub_total"]').text(response.total);
 
                     $.each(response.cart, function(key, value) {
                         cart += `<div class="cart-item product-summary">
@@ -527,6 +527,137 @@ $('#cart_items').html(cart);
             });
         }
     </script>
+
+    {{-- My Cart ajax script --}}
+<script type="text/javascript">
+    function myCartView()
+    {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/my-cart/get-products',
+            success: function (data) {
+                var items = '';
+
+                $.each(data.cart, function (key, value) {
+                    items += `<tr>
+        <td class="col-md-2"><img src="/${value.options.image} "
+            style="width:80px; height:80px;" alt="imga"></td>
+
+        <td class="col-md-2">
+            <div class="product-name"><a href="#">${value.name}</a></div>
+
+            <div class="price">
+                            ${value.price}
+                        </div>
+                    </td>
+
+            <td class="col-md-2">
+
+                <button type="submit" id="${value.rowId}"
+                onclick="incrementQty(this.id)" class="btn btn-info btn-sm">+</button>
+
+                <input type="text" min="1" style="width: 30px" disabled value="${value.qty}" />
+
+                ${value.qty > 1
+                    ? `<button type="submit" id="${value.rowId}"
+                onclick="decrementQty(this.id)" class="btn btn-danger btn-sm">-</button>`
+                    : `<button type="submit" disabled class="btn btn-danger btn-sm">-</button>`
+                    }
+
+            </td>
+
+            <td class="col-md-2">
+                ${value.options.size == '' || value.options.size == null
+                ? `<strong>...</strong>`
+                : `<strong>${value.options.size}</strong>` }
+            </td>
+
+            <td class="col-md-2">
+                <strong>EGP ${value.subtotal}</strong>
+            </td>
+
+            <td class="col-md-2">
+                <strong>${value.options.color}</strong>
+            </td>
+
+        <td class="col-md-1 close-btn">
+            <button type="submit" class="" id="${value.rowId}" onclick="removeCartItem(this.id)"><i class="fa fa-times"></i></button>
+        </td>
+                </tr>`;
+                });
+                $('#my_cart').html(items);
+            }
+
+        });
+    }
+    myCartView();
+
+    // remove cart item function
+    function removeCartItem(id)
+    {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/cart/remove-item/' + id,
+            success: function (response) {
+                myCartView();
+
+                const MSG = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 5000
+                    })
+
+                    if ($.isEmptyObject(response.error))
+                    {
+                        MSG.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: response.success
+                        });
+                    }
+                    else
+                    {
+                        MSG.fire({
+                            type: 'error',
+                            icon: 'error',
+                            title: response.error
+                        });
+                    }
+                shoppingCart();
+            }
+        });
+    }
+
+    // Increment Quantity function
+    function incrementQty(rowId) {
+        $.ajax({
+            type: 'GET',
+            url: '/increment-qty/' + rowId,
+            dataType: 'json',
+            success: function () {
+                shoppingCart();
+                myCartView();
+            }
+        });
+    }
+
+    // Decrement Quantity function
+    function decrementQty(rowId)
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/decrement-qty/' + rowId,
+            dataType: 'json',
+            success: function () {
+                shoppingCart();
+                myCartView();
+            }
+        });
+    }
+</script>
 </body>
 
 </html>

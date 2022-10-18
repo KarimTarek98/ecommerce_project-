@@ -20,7 +20,7 @@
                                 Wishlist
                                 @endif
                             </a></li>
-                        <li><a href="#">
+                        <li><a href="{{ route('my-cart') }}">
                                 @if (session()->get('lang') == 'ar')
                                 مشترياتي <i class="icon fa fa-shopping-cart"></i>
                                 @else
