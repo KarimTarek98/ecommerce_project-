@@ -101,6 +101,19 @@
                 </ul>
             </li>
 
+            <li class="treeview {{ ($prefix == 'admin/coupons') ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Coupons</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ ($route == 'admin.all-coupons') ? 'active' : '' }}"><a href="{{ route('admin.all-coupons') }}"><i class="ti-more"></i>All Coupons</a></li>
+                </ul>
+            </li>
+
             <li class="header nav-small-cap">User Interface</li>
 
             <li class="treeview">

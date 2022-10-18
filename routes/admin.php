@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -153,6 +154,25 @@ Route::prefix('admin')->group(function () {
                 Route::get('/delete/{id}', 'deleteSlider')->name('admin.delete-slider');
             });
 
+        });
+
+        // All Routes for coupons
+        Route::prefix('coupons')->group(function () {
+            Route::controller(CouponController::class)->group(function () {
+                Route::get('/', 'allCoupons')->name('admin.all-coupons');
+
+                // add coupon route
+                Route::get('/add', 'addCoupon')->name('admin.add-coupon');
+
+                // store coupon route
+                Route::post('/store', 'store')->name('admin.store-coupon');
+                // edit coupon page
+                Route::get('/edit/{id}', 'edit')->name('admin.edit-coupon');
+                // update coupon
+                Route::post('/update', 'update')->name('admin.update-coupon');
+                // delete coupon route
+                Route::get('/delete/{id}', 'delete')->name('admin.delete-coupon');
+            });
         });
 
     });
