@@ -48,6 +48,12 @@ Route::controller(CartController::class)->group(function () {
 
     // add product to wishlist
     Route::post('/wishlist/insert/{productId}', 'addToWishlist');
+
+    // Apply Coupon with ajax
+    Route::post('/coupon-apply', 'couponApply');
+
+    // Calculate Discount and total
+    Route::get('/calc-discount', 'calcDiscount');
 });
 
 // Wishlist routes

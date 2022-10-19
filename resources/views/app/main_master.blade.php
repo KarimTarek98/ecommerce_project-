@@ -658,6 +658,9 @@ $('#cart_items').html(cart);
         });
     }
 </script>
+
+@yield('js')
+
 </body>
 
 </html>

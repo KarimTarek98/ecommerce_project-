@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\Wishlist;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -117,6 +119,56 @@ class CartController extends Controller
         {
             return response()->json([
                 'error' => 'You should login first please'
+            ]);
+        }
+    }
+
+    // Coupon Apply method
+    public function couponApply(Request $request)
+    {
+        $coupon = Coupon::where('coupon_code', $request->coupon_code)
+            ->where('coupon_validity', '>=', Carbon::now()->format('Y-m-d'))
+            ->first();
+
+        if ($coupon)
+        {
+
+            Session::put('coupon', [
+                'coupon_code' => $coupon->coupon_code,
+                'coupon_discount' => $coupon->coupon_discount,
+                'discount_amount' => (Cart::total() * $coupon->coupon_discount) / 100,
+                'total' => Cart::total() - (Cart::total() * $coupon->coupon_discount) / 100
+            ]);
+
+            return response()->json([
+                'success' => 'Coupon Applied'
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'error' => 'Invalid Coupon'
+            ]);
+        }
+    }
+
+    public function calcDiscount()
+    {
+        // Check if coupon is applied
+        if (session()->has('coupon'))
+        {
+            return response()->json([
+                'total_before_discount' => Cart::total(),
+                'coupon_code' => session()->get('coupon')['coupon_code'],
+                'coupon_discount' => session()->get('coupon')['coupon_discount'],
+                'discount_amount' => session()->get('coupon')['discount_amount'],
+                'total_after_discount' => session()->get('coupon')['total']
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'total' => Cart::total()
             ]);
         }
     }
