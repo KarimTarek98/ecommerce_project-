@@ -601,7 +601,12 @@ $('#cart_items').html(cart);
             dataType: 'json',
             url: '/cart/remove-item/' + id,
             success: function (response) {
+                calcDiscount();
+                $('#coupon_section').show();
+                $('#coupon_code').val('');
                 myCartView();
+                shoppingCart();
+
 
                 const MSG = Swal.mixin({
                         toast: true,
@@ -626,7 +631,7 @@ $('#cart_items').html(cart);
                             title: response.error
                         });
                     }
-                shoppingCart();
+
             }
         });
     }
@@ -637,9 +642,12 @@ $('#cart_items').html(cart);
             type: 'GET',
             url: '/increment-qty/' + rowId,
             dataType: 'json',
-            success: function () {
+            success: function (data) {
                 shoppingCart();
                 myCartView();
+                calcDiscount();
+
+
             }
         });
     }
@@ -654,6 +662,7 @@ $('#cart_items').html(cart);
             success: function () {
                 shoppingCart();
                 myCartView();
+                calcDiscount();
             }
         });
     }

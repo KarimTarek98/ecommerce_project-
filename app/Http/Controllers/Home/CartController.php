@@ -18,6 +18,11 @@ class CartController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        if (session()->has('coupon'))
+        {
+            session()->forget('coupon');
+        }
+
         // Add to cart check if product has discount or not
         if ($product->discount_price != null)
         {
@@ -80,6 +85,11 @@ class CartController extends Controller
     {
         Cart::remove($rowId);
 
+        if (Session::has('coupon'))
+        {
+            Session::forget('coupon');
+        }
+
         return response()->json([
             'success' => 'Product Removed from your cart'
         ]);
@@ -123,7 +133,7 @@ class CartController extends Controller
         }
     }
 
-    // Coupon Apply method
+    // Coupon Apply methods
     public function couponApply(Request $request)
     {
         $coupon = Coupon::where('coupon_code', $request->coupon_code)
@@ -171,5 +181,13 @@ class CartController extends Controller
                 'total' => Cart::total()
             ]);
         }
+    }
+
+    // Remove coupon method
+    public function removeCoupon()
+    {
+        session()->forget('coupon');
+
+        return response()->json(['success' => 'Coupon Removed']);
     }
 }

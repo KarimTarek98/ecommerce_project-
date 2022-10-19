@@ -53,7 +53,7 @@
                             @if (session()->has('coupon'))
 
                             @else
-                            <table class="table">
+                            <table class="table" id="coupon_section">
                                 <thead>
                                     <tr>
                                         <th>
@@ -81,8 +81,8 @@
 
                         </div>
 
-                        @if (session()->has('coupon'))
-                        <div class="col-md-6 col-sm-12 cart-shopping-total">
+
+                        <div class="col-md-4 col-sm-12 cart-shopping-total" id="discount_section">
                             <table class="table">
                                 <thead id="calc_discount">
 
@@ -99,25 +99,7 @@
                                 </tbody><!-- /tbody -->
                             </table><!-- /table -->
                         </div>
-                        @else
-                        <div class="col-md-4 col-sm-12 cart-shopping-total">
-                            <table class="table">
-                                <thead id="calc_discount">
 
-                                </thead><!-- /thead -->
-                                <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="cart-checkout-btn pull-right">
-                                                    <button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
-                                                    <span class="">Checkout with multiples address!</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                </tbody><!-- /tbody -->
-                            </table><!-- /table -->
-                        </div>
-                        @endif
 
 
 
@@ -149,6 +131,9 @@
             },
             dataType: "json",
             success: function (data) {
+
+                $('#coupon_section').hide();
+                calcDiscount();
 
                 const MSG = Swal.mixin({
                         toast: true,
@@ -207,6 +192,9 @@
                         <th>
                             <div class="cart-sub-total">
                                 Coupon Code<span class="inner-left-md">${data.coupon_code}</span>
+                                <button type="submit" onclick="removeCoupon()" title="Remove Coupon">
+	                                <i class="fa fa-times"></i>
+                                </button>
                             </div>
                             <div class="cart-sub-total">
                                 Coupon Discount<span class="inner-left-md">${data.coupon_discount}%</span>
@@ -228,5 +216,45 @@
         });
     }
     calcDiscount();
+
+    function removeCoupon()
+    {
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/remove-coupon') }}",
+            dataType: "json",
+            success: function (response) {
+
+                calcDiscount();
+                $('#coupon_section').show();
+                $('#coupon_code').val('');
+
+                const MSG = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 5000
+                    })
+
+                    if ($.isEmptyObject(response.error))
+                    {
+                        MSG.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: response.success
+                        });
+                    }
+                    else
+                    {
+                        MSG.fire({
+                            type: 'error',
+                            icon: 'error',
+                            title: response.error
+                        });
+                    }
+
+            }
+        });
+    }
 </script>
 @endsection

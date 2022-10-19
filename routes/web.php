@@ -54,6 +54,9 @@ Route::controller(CartController::class)->group(function () {
 
     // Calculate Discount and total
     Route::get('/calc-discount', 'calcDiscount');
+
+    // Remove Coupon
+    Route::get('/remove-coupon', 'removeCoupon');
 });
 
 // Wishlist routes
