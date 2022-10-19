@@ -114,6 +114,21 @@
                 </ul>
             </li>
 
+            <li class="treeview {{ ($prefix == 'admin/shipping') ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Shipping Area</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ ($route == 'admin.all-cities') ? 'active' : '' }}"><a href="{{ route('admin.all-cities') }}"><i class="ti-more"></i>All Cities</a></li>
+                    <li class="{{ ($route == 'admin.all-regions') ? 'active' : '' }}"><a href="{{ route('admin.all-regions') }}"><i class="ti-more"></i>Shipping Regions</a></li>
+                    <li class="{{ ($route == 'admin.all-districts') ? 'active' : '' }}"><a href="{{ route('admin.all-districts') }}"><i class="ti-more"></i>Region Districts</a></li>
+                </ul>
+            </li>
+
             <li class="header nav-small-cap">User Interface</li>
 
             <li class="treeview">

@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\Shipping\CityRegionController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\Shipping\RegionDistrictController;
+use App\Http\Controllers\Admin\Shipping\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SubSubCategoryController;
@@ -173,6 +176,55 @@ Route::prefix('admin')->group(function () {
                 // delete coupon route
                 Route::get('/delete/{id}', 'delete')->name('admin.delete-coupon');
             });
+        });
+
+        // All Routes For Shipping Area
+        Route::prefix('shipping')->group(function () {
+
+            Route::controller(ShippingAreaController::class)->group(function () {
+                Route::get('/', 'allCities')->name('admin.all-cities');
+                Route::get('/add', 'addCity')->name('admin.shipping.add-city');
+                Route::post('/store', 'storeCity')->name('admin.shipping.store-city');
+                Route::get('/edit/{id}', 'edit')->name('admin.shipping.edit-city');
+                Route::post('/update', 'update')->name('admin.shipping.update-city');
+                Route::get('/delete/{id}', 'delete')->name('admin.shipping.delete-city');
+            });
+
+            Route::controller(CityRegionController::class)->group(function () {
+                Route::get('/regions', 'allRegions')
+                    ->name('admin.all-regions');
+
+                Route::get('/add-region', 'addRegion')
+                    ->name('admin.add-city-region');
+
+                Route::post('/store', 'storeRegion')
+                    ->name('admin.shipping.store-region');
+
+                Route::get('/edit/{id}', 'editRegion')
+                    ->name('admin.shipping.edit-region');
+
+                Route::post('/update', 'updateRegion')
+                    ->name('admin.shipping.update-region');
+
+                Route::get('/delete-region/{id}', 'deleteRegion')
+                    ->name('admin.shipping.delete-region');
+            });
+
+            Route::controller(RegionDistrictController::class)->group(function () {
+
+                Route::get('/region-districts', 'allDistricts')
+                    ->name('admin.all-districts');
+
+                Route::get('/region-districts/add', 'addDistrict')
+                    ->name('admin.add-region-district');
+
+                // get regions with using ajax
+                Route::get('/get-regions/{cityId}', 'getRegions');
+
+                Route::post('/store-district', 'store')->name('admin.shipping.store-district');
+
+            });
+
         });
 
     });
