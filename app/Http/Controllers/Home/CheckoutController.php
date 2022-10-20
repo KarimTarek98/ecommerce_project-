@@ -69,11 +69,12 @@ class CheckoutController extends Controller
         $data['region_id'] = $request->region_id;
         $data['district_id'] = $request->district_id;
         $data['notes'] = $request->notes;
+        $cartTotal = Cart::total();
 
 
         if ($request->payment_method == 'stripe')
         {
-            return view('app.payment.stripe', compact('data'));
+            return view('app.payment.stripe', compact('data', 'cartTotal'));
         }
         elseif ($request->payment_method == 'card')
         {

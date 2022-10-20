@@ -9,6 +9,7 @@ use App\Http\Controllers\Home\IndexController;
 use App\Http\Controllers\Home\LangController;
 use App\Http\Controllers\Home\UserController;
 use App\Http\Controllers\User\MyCartController;
+use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\WishlistController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -114,6 +115,13 @@ Route::controller(CheckoutController::class)->group(function () {
     Route::get('/checkout/shipping/get-districts/{region_id}', 'getDistricts');
 
     Route::post('/checkout-save', 'checkoutProceed')->name('checkout.save');
+});
+
+// Stripe Payment Routes
+Route::middleware(['auth', 'user'])->group(function () {
+    Route::controller(StripeController::class)->group(function () {
+        Route::post('/stripe-order', 'stripeOrder')->name('stripe-order');
+    });
 });
 
 // Multilingual Routes
