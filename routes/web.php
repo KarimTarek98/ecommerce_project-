@@ -4,6 +4,7 @@ use App\Http\Controllers\Home\ProductDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Home\CartController;
+use App\Http\Controllers\Home\CheckoutController;
 use App\Http\Controllers\Home\IndexController;
 use App\Http\Controllers\Home\LangController;
 use App\Http\Controllers\Home\UserController;
@@ -104,6 +105,15 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/update-profile', 'updateProfile')->name('update.user-profile');
     Route::get('/user/change-password', 'changePassword')->name('change-password.user');
     Route::post('/user/update-pass', 'updatePass')->name('update.user-password');
+});
+
+// Checkout Routes
+Route::controller(CheckoutController::class)->group(function () {
+    Route::get('/checkout', 'checkoutRedirect')->name('checkout');
+    Route::get('/checkout/shipping/get-regions/{city_id}', 'getRegions');
+    Route::get('/checkout/shipping/get-districts/{region_id}', 'getDistricts');
+
+    Route::post('/checkout-save', 'checkoutProceed')->name('checkout.save');
 });
 
 // Multilingual Routes
