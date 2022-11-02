@@ -15,4 +15,17 @@ class Partner extends Model
         'partner_slug_ar',
         'partner_img',
     ];
+
+    public static function mkdir()
+    {
+        if (!file_exists(public_path('uploads/partners')))
+        {
+            mkdir(public_path('uploads/partners'), 666, true);
+        }
+    }
+
+    public static function scopeLatest($q)
+    {
+        return $q->latest()->get();
+    }
 }

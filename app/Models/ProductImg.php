@@ -12,4 +12,9 @@ class ProductImg extends Model
         'product_id',
         'img_name',
     ];
+
+    public function scopeGetId($q, $id)
+    {
+        return $q->where('product_id', $id)->get();
+    }
 }

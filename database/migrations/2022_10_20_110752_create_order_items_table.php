@@ -18,8 +18,8 @@ return new class extends Migration
 
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products');
-            $table->string('color');
-            $table->string('size');
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->string('qty');
             $table->float('price',8,2);
 

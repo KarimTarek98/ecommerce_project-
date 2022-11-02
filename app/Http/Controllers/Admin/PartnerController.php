@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PartnerValid;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class PartnerController extends Controller
 {
+
     public function allPartners()
     {
-        $partners = Partner::latest()->get();
-        return view('admin.partners.all', compact('partners'));
+        return view('admin.partners.all', ['partners' => Partner::latest()->get()]);
     }
 
     public function addPartnerView()
@@ -20,35 +21,15 @@ class PartnerController extends Controller
         return view('admin.partners.add-new-partner');
     }
 
-    public function storePartners(Request $request)
+    public function storePartners(PartnerValid $request)
     {
-
-        // validate request inputs
-        $request->validate([
-            'partner_name_en' => 'required|string|max:30',
-            'partner_name_ar' => 'required|string|max:35',
-            'partner_img' =>'required|image|mimes:png'
-        ], [
-            'partner_name_en.required' => 'You must insert partner name in English',
-            'partner_name_en.string' => 'Partner Name should be string type',
-            'partner_name_en.max' => 'Partner Name should be max of 30 character',
-            'partner_name_ar.required' => 'You must insert partner name in Arabic',
-            'partner_name_ar.string' => 'Partner Name should be string type',
-            'partner_name_ar.max' => 'Partner Name should be max of 35 character',
-            'partner_img.required' => 'You must insert partner image',
-            'partner_img.image' => 'Partner Image should be image only',
-            'partner_img.mimes' => 'Partner Image should type of png only',
-        ]);
 
         $partnerImg = $request->file('partner_img');
 
         $imgGenName = date('mdYHis') . hexdec(uniqid()) . '.' . $partnerImg->getClientOriginalExtension();
         $savePath = 'uploads/partners/' . $imgGenName;
 
-        if (!file_exists(public_path('uploads/partners')))
-        {
-            mkdir(public_path('uploads/partners'), 666, true);
-        }
+        Partner::mkdir();
         Image::make($partnerImg)->resize(300, 300)->save('uploads/partners/' . $imgGenName);
 
         Partner::create([
