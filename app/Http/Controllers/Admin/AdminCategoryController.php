@@ -3,25 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidCategory;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class AdminCategoryController extends Controller
 {
-    public function allCategories()
+    public function index()
     {
-        $categories = Category::select('*')->orderBy('id', 'DESC')->get();
-
-        return view('admin.categories.all', compact('categories'));
+        return view('admin.categories.index', [
+            'categories' => Category::latest()->get()
+        ]);
     }
 
-    public function addCategory()
+    public function create()
     {
-        return view('admin.categories.add');
+        return view('admin.categories.create');
     }
 
-    public function storeCategory(ValidCategory $request)
+    public function store(StoreCategoryRequest $request)
     {
         Category::create([
             'category_name_en' => $request->category_name_en,
@@ -35,20 +34,15 @@ class CategoryController extends Controller
             ->with('success', 'Category Added Successfully');
     }
 
-    public function editCategory($id)
+    public function edit(Category $category)
     {
-        $category = Category::findOrFail($id);
-
         return view('admin.categories.edit', compact('category'));
     }
 
-    public function updateCategory(ValidCategory $request)
+    public function update(StoreCategoryRequest $request, Category $category)
     {
-        $catId = $request->category_id;
 
-        $catToUpdate = Category::findOrFail($catId);
-
-        $catToUpdate->update([
+        $category->update([
             'category_name_en' => $request->category_name_en,
             'category_name_ar' => $request->category_name_ar,
             'category_slug_en' => strtolower(str_replace(' ', '-', $request->category_name_en)),
@@ -56,15 +50,13 @@ class CategoryController extends Controller
             'category_icon' => $request->category_icon
         ]);
 
-        return redirect()->route('admin.all-categories')
+        return redirect('admin/categories')
             ->with('info', 'Category Updated');
     }
 
-    public function deleteCategory($id)
+    public function destroy(Category $category)
     {
-        $catToDelete = Category::findOrFail($id);
-
-        $catToDelete->delete();
+        $category->delete();
 
         return redirect()->route('admin.all-categories')
             ->with('error', 'Category Deleted !');

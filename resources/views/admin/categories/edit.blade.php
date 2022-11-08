@@ -40,10 +40,10 @@
 
 
                         <div class="col">
-                            <form action="{{ route('admin.update-category') }}" method="POST">
+                            <form action="{{ route('categories.update', $category->category_slug_en) }}" method="POST">
                                 @csrf
-
-                                <input type="hidden" name="category_id" value="{{ $category->id }}">
+                                @method('PATCH')
+                                {{-- <input type="hidden" name="category_id" value="{{ $category->id }}"> --}}
 
                                 <div class="row" style="margin-bottom: 30px">
                                     <div class="col-md-12">

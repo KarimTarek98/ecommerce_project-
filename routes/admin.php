@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\Shipping\CityRegionController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminPartnerController;
@@ -47,21 +47,8 @@ Route::prefix('admin')->group(function () {
         Route::get('partners/{partner}', [AdminPartnerController::class, 'destroy']);
 
         // Admin Dashboard Categories Routes
-        Route::prefix('categories')->group(function () {
-            Route::controller(CategoryController::class)->group(function () {
-                Route::get('/', 'allCategories')->name('admin.all-categories');
-
-                Route::get('/add', 'addCategory')->name('admin.add-category');
-
-                Route::post('/store', 'storeCategory')->name('admin.store-category');
-
-                Route::get('/edit/{id}', 'editCategory')->name('admin.edit-category');
-
-                Route::post('/update', 'updateCategory')->name('admin.update-category');
-
-                Route::get('/delete/{id}', 'deleteCategory')->name('admin.delete-category');
-            });
-        });
+        Route::resource('categories', AdminCategoryController::class)->except('destroy', 'show');
+        Route::get('category/{category}', [AdminCategoryController::class, 'destroy']);
         // All Routes for admin subcategories
         Route::prefix('sub')->group(function () {
 

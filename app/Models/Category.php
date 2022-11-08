@@ -17,4 +17,9 @@ class Category extends Model
         'category_icon',
     ];
 
+
+    public function getRouteKeyName()
+    {
+        return 'category_slug_en';
+    }
 }

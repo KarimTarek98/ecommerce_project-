@@ -31,7 +31,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Categories List</h3>
-                        <a href="{{ route('admin.add-category') }}" class="btn btn-rounded btn-primary mb-5" style="float: right;">
+                        <a href="{{ route('categories.create') }}" class="btn btn-rounded btn-primary mb-5" style="float: right;">
                             Add New Category
                         </a>
                     </div>
@@ -59,10 +59,10 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.edit-category', $category->id) }}" class="btn btn-success" title="Edit Partner">
+                                            <a href="{{ route('categories.edit', $category->category_slug_en) }}" class="btn btn-success" title="Edit Category">
                                                 <i class="fa  fa-pencil-square-o"></i>
                                             </a>
-                                            <a href="{{ route('admin.delete-category', $category->id) }}" id="delete" class="btn btn-danger" title="Delete Partner">
+                                            <a href="{{ url('admin/category/' . $category->category_slug_en) }}" id="delete" class="btn btn-danger" title="Delete Category">
                                                 <i class="fa  fa-trash"></i>
                                             </a>
                                         </td>

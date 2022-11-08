@@ -54,8 +54,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ ($route == 'admin.all-categories') ? 'active' : '' }}">
-                        <a href="{{ route('admin.all-categories') }}">
+                    <li class="{{ (Route::current()->uri == 'admin/categories' || 'admin/categories/create')
+                        ? 'active' : '' }}">
+                        <a href="{{ url('admin/categories') }}">
                             <i class="ti-more"></i>
                             All Categories
                         </a>
