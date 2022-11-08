@@ -43,18 +43,6 @@ Route::prefix('admin')->group(function () {
 
             Route::post('/update-password', 'updatePassword')->name('admin.update-password');
         });
-        // Admin Dashboard Partners Routes
-        /*Route::prefix('partners')->group(function () {
-            Route::controller(AdminPartnerController::class)->group(function () {
-                Route::get('/', 'index');
-                Route::get('/create', 'create');
-                Route::post('/', 'store');
-                Route::get('/edit/{partner}', 'edit');
-                Route::post('/update', 'update');
-                Route::get('/delete/{partner}', 'destroy');
-            });
-
-        });*/
         Route::resource('partners', AdminPartnerController::class)->except('destroy', 'show');
         Route::get('partners/{partner}', [AdminPartnerController::class, 'destroy']);
 
