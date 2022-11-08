@@ -18,4 +18,9 @@ class CityRegion extends Model
     {
         return $this->belongsTo(ShippingCity::class, 'city_id');
     }
+
+    public function scopeRegion($query, $id)
+    {
+        return $query->where('city_id', $id)->orderBy('region_name', 'ASC');
+    }
 }

@@ -44,10 +44,7 @@ class CheckoutController extends Controller
 
     public function getRegions($city_id)
     {
-        $regions = CityRegion::where('city_id', '=', $city_id)
-            ->orderBy('region_name', 'ASC')->get();
-
-        return json_encode($regions);
+        return json_encode(CityRegion::region($city_id)->get());
     }
 
     public function getDistricts($region_id)

@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\Shipping\CityRegionController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\Shipping\RegionDistrictController;
 use App\Http\Controllers\Admin\Shipping\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
@@ -20,7 +20,7 @@ Route::prefix('admin')->group(function () {
 
     // Routes for admin login
     Route::middleware('admin:admin')->group(function () {
-        Route::get('/login', [AdminController::class, 'loginForm']);
+        Route::get('/login', [AdminController::class, 'index']);
         Route::post('/login', [AdminController::class, 'store'])->name('admin.login');
     });
 
@@ -35,10 +35,10 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         // Admin Profile Routes
-        Route::controller(ProfileController::class)->group(function () {
-            Route::get('/profile', 'profileView')->name('admin.profile');
-            Route::get('/edit-profile', 'editProfile')->name('admin.edit-profile');
-            Route::post('/update-profile', 'updateProfile')->name('admin.update-profile');
+        Route::controller(AdminProfileController::class)->group(function () {
+            Route::get('/profile', 'index')->name('admin.profile');
+            Route::get('/edit-profile', 'edit')->name('admin.edit-profile');
+            Route::post('/update-profile', 'update')->name('admin.update-profile');
             Route::get('/change-password', 'changePassword')->name('admin.change-password');
 
             Route::post('/update-password', 'updatePassword')->name('admin.update-password');
