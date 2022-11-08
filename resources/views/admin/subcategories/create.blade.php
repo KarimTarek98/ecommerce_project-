@@ -40,7 +40,7 @@
 
 
                         <div class="col">
-                            <form action="{{ route('admin.store-subcategory') }}" method="POST">
+                            <form action="{{ route('sub_categories.store') }}" method="POST">
                                 @csrf
                                 <div class="row" style="margin-bottom: 30px">
                                     <div class="col-md-12">

@@ -49,8 +49,9 @@ Route::prefix('admin')->group(function () {
         // Admin Dashboard Categories Routes
         Route::resource('categories', AdminCategoryController::class)->except('destroy', 'show');
         Route::get('category/{category}', [AdminCategoryController::class, 'destroy']);
+
         // All Routes for admin subcategories
-        Route::prefix('sub')->group(function () {
+        /*Route::prefix('sub')->group(function () {
 
             Route::controller(SubCategoryController::class)->group(function () {
 
@@ -65,7 +66,9 @@ Route::prefix('admin')->group(function () {
 
             });
 
-        });
+        });*/
+        Route::resource('sub_categories', SubCategoryController::class)->except('destroy', 'show');
+        Route::get('sub_category/{sub_category}', [SubCategoryController::class, 'destroy']);
 
         // All Routes for admin subsubcategories
         Route::prefix('sub-sub')->group(function () {

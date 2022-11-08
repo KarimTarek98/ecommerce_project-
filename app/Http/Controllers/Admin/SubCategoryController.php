@@ -3,36 +3,28 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSubCategoryRequest;
 use App\Models\Category;
 use App\Models\SubCategory;
-use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
-    public function all()
+    public function index()
     {
-        $subcategories = SubCategory::orderBy('id', 'DESC')->get();
-
-        return view('admin.subcategories.all', compact('subcategories'));
-    }
-
-    public function add()
-    {
-        $categories = Category::orderBy('category_name_en', 'ASC')->get();
-        return view('admin.subcategories.add', compact('categories'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'subcategory_name_en' => 'required|string|max:30',
-            'subcategory_name_ar' => 'required|string|max:30',
-            'category_id' => 'required|integer'
-        ], [
-            'subcategory_name_en.required' => 'Please insert Subcategory name in English',
-            'subcategory_name_ar.required' => 'Please insert Subcategory name in Arabic',
+        return view('admin.subcategories.index', [
+            'subcategories' => SubCategory::latest()->get()
         ]);
+    }
 
+    public function create()
+    {
+        return view('admin.subcategories.create', [
+            'categories' => Category::orderBy('category_name_en', 'ASC')->get()
+        ]);
+    }
+
+    public function store(StoreSubCategoryRequest $request)
+    {
         SubCategory::create([
             'subcategory_name_en' => $request->subcategory_name_en,
             'subcategory_name_ar' => $request->subcategory_name_ar,
@@ -41,33 +33,21 @@ class SubCategoryController extends Controller
             'category_id' => $request->category_id
         ]);
 
-        return redirect()->route('admin.subcategories')
+        return redirect('admin/sub_categories')
             ->with('success', 'Subcategory Added Successfully');
     }
 
-    public function edit($id)
+    public function edit($subcategory)
     {
-        $subcategory = SubCategory::findOrFail($id);
-        $categories = Category::orderBy('category_name_en', 'ASC')->get();
-
-        return view('admin.subcategories.edit', compact('subcategory', 'categories'));
+        return view('admin.subcategories.edit', [
+            'subcategory' => SubCategory::slug($subcategory)->first(),
+            'categories' => Category::orderBy('category_name_en', 'ASC')->get()
+        ]);
     }
 
-    public function update(Request $request)
+    public function update(StoreSubCategoryRequest $request, $subcategory)
     {
-        $request->validate([
-            'subcategory_name_en' => 'required|string|max:30',
-            'subcategory_name_ar' => 'required|string|max:30',
-            'category_id' => 'required|integer'
-        ], [
-            'subcategory_name_en.required' => 'Please insert Subcategory name in English',
-            'subcategory_name_ar.required' => 'Please insert Subcategory name in Arabic',
-        ]);
-
-        $subId = $request->subcategory_id;
-        $subToUpdate = SubCategory::findOrFail($subId);
-
-        $subToUpdate->update([
+        SubCategory::slug($subcategory)->update([
             'subcategory_name_en' => $request->subcategory_name_en,
             'subcategory_name_ar' => $request->subcategory_name_ar,
             'subcategory_slug_en' => strtolower(str_replace(' ', '-', $request->subcategory_name_en)),
@@ -75,16 +55,16 @@ class SubCategoryController extends Controller
             'category_id' => $request->category_id
         ]);
 
-        return redirect()->route('admin.subcategories')
+        return redirect('admin/sub_categories')
             ->with('info', 'Subcategory Updated');
     }
 
-    public function delete($id)
+    public function destroy($subcategory)
     {
-        $subToDelete = SubCategory::findOrFail($id);
-        $subToDelete->delete();
 
-        return redirect()->route('admin.subcategories')
+        SubCategory::slug($subcategory)->delete();
+
+        return redirect('admin/sub_categories')
             ->with('error', 'Subcategory Deleted !');
     }
 }

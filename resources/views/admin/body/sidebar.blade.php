@@ -39,7 +39,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ (Route::current()->uri == 'admin/partners' || 'admin/partners/create')
+                    <li class="{{ (Route::current()->uri == 'admin/partners')
                     ? 'active' : '' }}">
                         <a href="{{ url('admin/partners') }}"><i class="ti-more"></i>All Partners</a>
                     </li>
@@ -54,15 +54,16 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ (Route::current()->uri == 'admin/categories' || 'admin/categories/create')
+                    <li class="{{ (Route::current()->uri == 'admin/categories')
                         ? 'active' : '' }}">
                         <a href="{{ url('admin/categories') }}">
                             <i class="ti-more"></i>
                             All Categories
                         </a>
                     </li>
-                    <li class="{{ ($route == 'admin.subcategories') ? 'active' : '' }}">
-                        <a href="{{ route('admin.subcategories') }}">
+                    <li class="{{ (Route::current()->uri == 'admin/sub-categories')
+                        ? 'active' : '' }}">
+                        <a href="{{ route('sub_categories.index') }}">
                             <i class="ti-more"></i>
                             All Sub Categories
                         </a>

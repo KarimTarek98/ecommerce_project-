@@ -21,4 +21,12 @@ class SubCategory extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('subcategory_slug_en', $slug);
+    }
+    public function getRouteKeyName()
+    {
+        return 'subcategory_slug_en';
+    }
 }

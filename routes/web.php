@@ -94,9 +94,9 @@ Route::controller(MyCartController::class)->group(function () {
 Route::middleware(['auth:sanctum,web', config('jetstream.auth_session'), 'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
-        return view('dashboard', compact('user'));
+        return view('dashboard', [
+            'user' => User::find(Auth::user()->id)
+        ]);
     })->name('dashboard');
 });
 

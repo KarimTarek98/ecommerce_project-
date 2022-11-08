@@ -31,7 +31,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Subcategories List</h3>
-                        <a href="{{ route('admin.add-subcategory') }}" class="btn btn-rounded btn-primary mb-5" style="float: right;">
+                        <a href="{{ route('sub_categories.create') }}" class="btn btn-rounded btn-primary mb-5" style="float: right;">
                             Add New Subcategory
                         </a>
                     </div>
@@ -55,11 +55,11 @@
                                         <td>{{ $subcategory->subcategory_name_ar }}</td>
                                         <td>{{ $subcategory->category->category_name_en }}</td>
                                         <td>
-                                            <a href="{{ route('admin.edit-subcategory', $subcategory->id) }}"
+                                            <a href="{{ route('sub_categories.edit', $subcategory->subcategory_slug_en) }}"
                                                 class="btn btn-success" title="Edit Partner">
                                                 <i class="fa  fa-pencil-square-o"></i>
                                             </a>
-                                            <a href="{{ route('admin.delete-subcategory', $subcategory->id) }}"
+                                            <a href=""
                                                 id="delete" class="btn btn-danger" title="Delete Partner">
                                                 <i class="fa  fa-trash"></i>
                                             </a>
