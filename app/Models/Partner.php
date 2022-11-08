@@ -28,4 +28,9 @@ class Partner extends Model
     {
         return $q->latest()->get();
     }
+
+    public function getRouteKeyName()
+    {
+        return 'partner_slug_en';
+    }
 }

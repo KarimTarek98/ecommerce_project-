@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\Shipping\CityRegionController;
 use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\AdminPartnerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\Shipping\RegionDistrictController;
@@ -44,16 +44,19 @@ Route::prefix('admin')->group(function () {
             Route::post('/update-password', 'updatePassword')->name('admin.update-password');
         });
         // Admin Dashboard Partners Routes
-        Route::prefix('partners')->group(function () {
-            Route::controller(PartnerController::class)->group(function () {
-                Route::get('/', 'allPartners')->name('admin.all-partners');
-                Route::get('/add-partner', 'addPartnerView')->name('admin.add-partner');
-                Route::post('/store-partners', 'storePartners')->name('admin.store-partner');
-                Route::get('/edit/{id}', 'editPartnerPage')->name('admin.edit-partner');
-                Route::post('/update-partner', 'updatePartner')->name('admin.update-partner');
-                Route::get('/delete/{id}', 'deletePartner')->name('admin.delete-partner');
+        /*Route::prefix('partners')->group(function () {
+            Route::controller(AdminPartnerController::class)->group(function () {
+                Route::get('/', 'index');
+                Route::get('/create', 'create');
+                Route::post('/', 'store');
+                Route::get('/edit/{partner}', 'edit');
+                Route::post('/update', 'update');
+                Route::get('/delete/{partner}', 'destroy');
             });
-        });
+
+        });*/
+        Route::resource('partners', AdminPartnerController::class)->except('destroy', 'show');
+        Route::get('partners/{partner}', [AdminPartnerController::class, 'destroy']);
 
         // Admin Dashboard Categories Routes
         Route::prefix('categories')->group(function () {

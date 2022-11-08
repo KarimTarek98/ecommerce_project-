@@ -50,9 +50,9 @@
 
 
                         <div class="col">
-                            <form action="{{ route('admin.update-partner') }}" enctype="multipart/form-data" method="POST">
+                            <form action="{{ url('admin/partners/' . $partner->partner_slug_en) }}" enctype="multipart/form-data" method="POST">
                                 @csrf
-
+                                @method('PATCH')
                                 <input type="hidden" name="partner_id" value="{{ $partner->id }}">
 
 

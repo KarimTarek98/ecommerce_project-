@@ -39,8 +39,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ ($route == 'admin.all-partners') ? 'active' : '' }}">
-                        <a href="{{ route('admin.all-partners') }}"><i class="ti-more"></i>All Partners</a>
+                    <li class="{{ (Route::current()->uri == 'admin/partners' || 'admin/partners/create')
+                    ? 'active' : '' }}">
+                        <a href="{{ url('admin/partners') }}"><i class="ti-more"></i>All Partners</a>
                     </li>
                 </ul>
             </li>

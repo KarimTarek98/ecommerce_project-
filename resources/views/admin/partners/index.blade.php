@@ -31,7 +31,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Partners List</h3>
-                        <a href="{{ route('admin.add-partner') }}" class="btn btn-rounded btn-primary mb-5" style="float: right;">
+                        <a href="{{ url('admin/partners/create') }}" class="btn btn-rounded btn-primary mb-5" style="float: right;">
                             Add New Partner
                         </a>
                     </div>
@@ -60,11 +60,21 @@
                                             alt="">
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.edit-partner', $partner->id) }}" class="btn btn-success" title="Edit Partner">
-                                                <i class="fa  fa-pencil-square-o"></i>
+                                            <a href="{{ url('admin/partners/' . $partner->partner_slug_en . '/edit') }}" class="btn btn-success" title="Edit Partner">
+                                                <i class="fa fa-pencil-square-o"></i>
                                             </a>
-                                            <a href="{{ route('admin.delete-partner', $partner->id) }}" id="delete" class="btn btn-danger" title="Delete Partner">
+                                            {{-- <form id="delete" method="POST" action="{{ route('partners.destroy', $partner->partner_slug_en) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-danger" value="Delete">
+
+                                                </div>
+
+                                            </form> --}}
+                                            <a href="{{ url('admin/partners/' . $partner->partner_slug_en) }}" id="delete" class="btn btn-danger" title="Delete Partner">
                                                 <i class="fa  fa-trash"></i>
+                                                
                                             </a>
                                         </td>
                                     </tr>

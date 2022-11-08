@@ -50,7 +50,7 @@
 
 
                         <div class="col">
-                            <form action="{{ route('admin.store-partner') }}" enctype="multipart/form-data" method="POST">
+                            <form action="{{ url('admin/partners') }}" enctype="multipart/form-data" method="POST">
                                 @csrf
                                 <div class="row" style="margin-bottom: 30px">
                                     <div class="col-md-12">
