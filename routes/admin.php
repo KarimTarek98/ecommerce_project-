@@ -51,22 +51,6 @@ Route::prefix('admin')->group(function () {
         Route::get('category/{category}', [AdminCategoryController::class, 'destroy']);
 
         // All Routes for admin subcategories
-        /*Route::prefix('sub')->group(function () {
-
-            Route::controller(SubCategoryController::class)->group(function () {
-
-                Route::get('/', 'all')->name('admin.subcategories');
-
-                Route::get('/add', 'add')->name('admin.add-subcategory');
-                Route::post('/store', 'store')->name('admin.store-subcategory');
-
-                Route::get('/edit/{id}', 'edit')->name('admin.edit-subcategory');
-                Route::post('/update', 'update')->name('admin.update-subcategory');
-                Route::get('/del/{id}', 'delete')->name('admin.delete-subcategory');
-
-            });
-
-        });*/
         Route::resource('sub_categories', SubCategoryController::class)->except('destroy', 'show');
         Route::get('sub_category/{sub_category}', [SubCategoryController::class, 'destroy']);
 
