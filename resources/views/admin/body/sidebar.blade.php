@@ -86,8 +86,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ ($route == 'admin.add-product') ? 'active' : '' }}"><a href="{{ route('admin.add-product') }}"><i class="ti-more"></i>Add Product</a></li>
-                    <li class="{{ ($route == 'admin.manage-products') ? 'active' : ''  }}"><a href="{{ route('admin.manage-products') }}"><i class="ti-more"></i>Manage Products</a></li>
+                    <li class="{{ ($route == 'admin.add-product') ? 'active' : '' }}"><a href="{{ url('admin/products/create') }}"><i class="ti-more"></i>Add Product</a></li>
+                    <li class="{{ ($route == 'admin.manage-products') ? 'active' : ''  }}"><a href="{{ url('admin/products') }}"><i class="ti-more"></i>Manage Products</a></li>
                 </ul>
             </li>
 

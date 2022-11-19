@@ -22,4 +22,9 @@ class Category extends Model
     {
         return 'category_slug_en';
     }
+
+    public function subCategories()
+    {
+        return $this->hasMany(SubCategory::class);
+    }
 }

@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\{
+    AdminCategoryController,
+    AdminPartnerController,
+    ProductController,
+    AdminProfileController,
+    SliderController,
+    SubCategoryController,
+    SubSubCategoryController,
+    CouponController
+};
 use App\Http\Controllers\Admin\Shipping\CityRegionController;
-use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\AdminPartnerController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\Shipping\RegionDistrictController;
 use App\Http\Controllers\Admin\Shipping\ShippingAreaController;
-use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\SubSubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
@@ -51,8 +53,8 @@ Route::prefix('admin')->group(function () {
         Route::get('category/{category}', [AdminCategoryController::class, 'destroy']);
 
         // All Routes for admin subcategories
-        Route::resource('sub_categories', SubCategoryController::class)->except('destroy', 'show');
         Route::get('sub_category/{sub_category}', [SubCategoryController::class, 'destroy']);
+        Route::resource('sub_categories', SubCategoryController::class)->except('destroy', 'show');
 
         // All Routes for admin subsubcategories
         Route::prefix('sub-sub')->group(function () {
@@ -73,21 +75,11 @@ Route::prefix('admin')->group(function () {
 
         // Routes for products
         Route::prefix('products')->group(function () {
-
             Route::controller(ProductController::class)->group(function () {
-
-                Route::get('/add', 'addProduct')->name('admin.add-product');
                 // Ajax Routes
                 Route::get('/get/{category_id}', 'getSubCat');
                 Route::get('/getsubsub/{subcategory_id}', 'getSubSub');
 
-                Route::post('/store', 'storeProduct')->name('admin.store-product');
-
-                Route::get('/manage', 'viewProducts')->name('admin.manage-products');
-                // route for edit product page
-                Route::get('/edit/{id}', 'edit')->name('admin.edit-product');
-                // route for update product
-                Route::post('/update', 'updateProduct')->name('admin.update-product');
                 // Route for update product multiple images
                 Route::post('/update-imgs', 'updateImgs')->name('admin.update-product-imgs');
                 // Route for update product main thumbnail
@@ -102,10 +94,11 @@ Route::prefix('admin')->group(function () {
 
                 // Delete product with its images
                 Route::get('/delete/{id}', 'delete')->name('admin.product-delete');
-
             });
-
         });
+        Route::as('admin')->resource('products', ProductController::class)->except(['show', 'destroy']);
+        //Route::resource('products', ProductController::class)->except(['show', 'destroy']);
+
 
         // All Slider Routes
         Route::prefix('sliders')->group(function () {

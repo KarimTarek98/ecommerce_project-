@@ -23,10 +23,11 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col">
-                        <form method="POST" action="{{ route('admin.update-product') }}">
+                        <form method="POST" action="{{ route('admin.products.update', $product) }}">
                             @csrf
+                            @method('PATCH')
                             {{-- Get product id to update --}}
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            {{-- <input type="hidden" name="product_id" value="{{ $product->id }}"> --}}
 
                             <div class="row">
                                 <div class="col-12">

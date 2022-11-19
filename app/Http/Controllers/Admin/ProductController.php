@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidProduct;
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Partner;
 use App\Models\Product;
@@ -16,11 +16,19 @@ use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
-    public function addProduct()
+    public function index()
     {
-        $categories = Category::orderBy('id', 'DESC')->get();
-        $brands = Partner::latest()->get();
-        return view('admin.products.add-product', compact('categories', 'brands'));
+        return view('admin.products.index', [
+            'products' => Product::latest()->get()
+        ]);
+    }
+
+    public function create()
+    {
+        return view('admin.products.create', [
+            'categories' => Category::latest()->get(),
+            'brands' => Partner::latest()->get()
+        ]);
     }
 
     public function getSubCat($category_id)
@@ -39,7 +47,7 @@ class ProductController extends Controller
         return json_encode($subSubCat);
     }
 
-    public function storeProduct(ValidProduct $request)
+    public function store(StoreProductRequest $request)
     {
         // product image upload
         $prodThumb = $request->file('product_thumbnail');
@@ -49,15 +57,15 @@ class ProductController extends Controller
 
         $saveUrl = 'uploads/products/product-thumbnails/' . $thumbName;
 
-        $productId = Product::insertGetId([
+        $product = Product::create([
             'partner_id' => $request->partner_id,
             'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
             'subsubcategory_id' => $request->subsubcategory_id,
             'product_name_en' => $request->product_name_en,
             'product_name_ar' => $request->product_name_ar,
-            'product_slug_en' => strtolower(str_replace(' ', '-', $request->product_name_en)),
-            'product_slug_ar' => str_replace(' ', '-', $request->product_name_ar),
+            'product_slug_en' => $request->product_name_en,
+            'product_slug_ar' => $request->product_name_ar,
             'product_code' => $request->product_code,
             'product_qty' => $request->product_qty,
             'product_tags_en' => $request->product_tags_en,
@@ -94,7 +102,7 @@ class ProductController extends Controller
                 ->save('uploads/products/product-multi-imgs/' . $request->product_name_en . '/' . $imgUniqueName);
             $imgPath = 'uploads/products/product-multi-imgs/' . $request->product_name_en . '/' . $imgUniqueName;
             ProductImg::insert([
-                'product_id' => $productId,
+                'product_id' => $product->id,
                 'img_name' => $imgPath,
                 'created_at' => Carbon::now()
             ]);
@@ -104,42 +112,29 @@ class ProductController extends Controller
             ->with('success', 'Product Inserted Successfully');
     }
 
-    // method to display all products in the database
-    public function viewProducts()
+    public function edit(Product $product)
     {
-        $products = Product::orderBy('id', 'DESC')->get();
-
-        return view('admin.products.view-products', compact('products'));
-    }
-
-    public function edit($id)
-    {
-        $brands = Partner::latest()->get();
-        $categories = Category::latest()->get();
-        $product = Product::find($id);
-
-        $productImgs = ProductImg::where('product_id', '=', $id)
-            ->get();
-
-        $subCategories = SubCategory::where('category_id', '=', $product->category_id)
-            ->get();
-
-        $subSubCategories = SubSubCategory::where('subcategory_id', '=', $product->subcategory_id)
-            ->get();
-
-        return view('admin.products.edit', compact('brands', 'categories', 'subCategories', 'subSubCategories', 'product', 'productImgs'));
+        return view('admin.products.edit', [
+            'product' => $product,
+            'brands' => Partner::latest()->get(),
+            'categories' => Category::latest()->get(),
+            'productImgs' => ProductImg::where('product_id', '=', $product->id)->get(),
+            'subCategories' => SubCategory::where('category_id', '=', $product->category_id)->get(),
+            'subSubCategories' => SubSubCategory::where('subcategory_id', '=', $product->subcategory_id)
+            ->get()
+        ]);
 
     }
 
     // update product method
-    public function updateProduct(ValidProduct $request)
+    public function update(StoreProductRequest $request, Product $product)
     {
-        $productId = $request->product_id;
+        //$productId = $request->product_id;
 
-        $productToUpdate = Product::findOrFail($productId);
-        rename(public_path('uploads/products/product-multi-imgs/'. $productToUpdate->product_name_en), public_path('uploads/products/product-multi-imgs/'. $request->product_name_en));
+        //$productToUpdate = Product::findOrFail($productId);
+        rename(public_path('uploads/products/product-multi-imgs/'. $product->product_name_en), public_path('uploads/products/product-multi-imgs/'. $request->product_name_en));
 
-        $productToUpdate->update([
+        $product->update([
             'partner_id' => $request->partner_id,
             'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
@@ -170,7 +165,7 @@ class ProductController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
-        return redirect()->route('admin.manage-products')
+        return redirect()->route('products.index')
             ->with('info', 'Product Updated without changing its images');
     }
 

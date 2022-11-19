@@ -71,7 +71,7 @@ Manage Products | Admin Dashboard
                                                 @endif
 
                                                 <td>
-                                                    <a href="{{ route('admin.edit-product', $product->id) }}" class="btn btn-success"
+                                                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-success"
                                                         title="Edit Product"><i class="fa fa-pencil"></i> </a>
                                                     <a href="{{ route('admin.product-delete', $product->id) }}"
                                                         class="btn btn-danger" title="Delete Product" id="delete">
