@@ -26,7 +26,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsToMany(Category::class, 'category_id');
     }
     public function subcategory()
     {
@@ -50,6 +50,27 @@ class Product extends Model
         return Attribute::make(
             set: fn ($value) => str_replace(' ', '-', $value)
         );
+    }
+
+    public function scopeCategory($query, $categoryId)
+    {
+        return $query->where('category_id', '=', $categoryId)
+        ->get();
+    }
+
+    public function scopeSpecial($query, $attribute)
+    {
+        return $query->where($attribute, 1)
+        ->limit(6)
+        ->get();
+    }
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', 1);
+    }
+    public function scopeOrderDesc($query)
+    {
+        return $query->orderBy('id', 'DESC');
     }
 
     public function getRouteKeyName()

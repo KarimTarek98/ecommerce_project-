@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Slider;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -12,19 +13,20 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('category_name_en', 'ASC')
-                    ->get();
-        $category1 = Category::skip(0)->first();
-        $category1Products = Product::where('category_id', '=', $category1->id)
-        ->orderBy('id', 'DESC')->get();
+        $category1 = Category::catSkip(0)->load('products');
+        $category2 = Category::catSkip(1)->load('products');
 
-        $category2 = Category::skip(1)->first();
-        $category2Products = Product::where('category_id', $category2->id)
-        ->orderBy('id', 'DESC')->get();
+        return view('app.index', [
+            'categories' => Category::orderBy('category_name_en', 'ASC')->get(),
+            'category1Products' => $category1->products,
+            'category2Products' => $category2->products,
+            'specialOffers' => Product::special('special_offer'),
+            'specialDeals' => Product::special('special_deals'),
+            'sliders' => Slider::where('status', '=', 1)->orderBy('id', 'DESC')->get(),
+            'products' => Product::active()->limit(6)->get(),
+            'featuredProducts' => Product::orderBy('id', 'DESC')->special('featured'),
 
-
-        return view('app.index',
-        compact('category1Products', 'category1', 'category2', 'category2Products', 'categories'));
+        ], compact('category1', 'category2'));
     }
 
     public function productsByTags($tag)

@@ -26,11 +26,6 @@
                         <h3 class="section-title">Special Offer</h3>
                         <div class="sidebar-widget-body outer-top-xs">
                             <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
-                                @php
-                                    $specialOffers = App\Models\Product::where('special_offer', 1)
-                                        ->limit(6)
-                                        ->get();
-                                @endphp
                                 @foreach ($specialOffers as $offer)
                                     <div class="item">
                                         <div class="products special-product">
@@ -104,11 +99,6 @@
                         <h3 class="section-title">Special Deals</h3>
                         <div class="sidebar-widget-body outer-top-xs">
                             <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
-                                @php
-                                    $specialDeals = App\Models\Product::where('special_deals', 1)
-                                        ->limit(6)
-                                        ->get();
-                                @endphp
                                 @foreach ($specialDeals as $specialDeal)
                                     <div class="item">
                                         <div class="products special-product">
@@ -206,11 +196,6 @@
                     <!-- ========================================== SECTION – HERO ========================================= -->
 
                     <div id="hero">
-                        @php
-                            $sliders = App\Models\Slider::where('status', '=', 1)
-                                ->orderBy('id', 'DESC')
-                                ->get();
-                        @endphp
                         <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
                             @foreach ($sliders as $slider)
                                 <div class="item" style="background-image: url({{ asset($slider->background) }});">
@@ -218,7 +203,8 @@
                                         <div class="caption bg-color vertical-center text-left">
                                             <div class="big-text fadeInDown-1"> {{ $slider->title }} </div>
                                             <div class="excerpt fadeInDown-2 hidden-xs">
-                                                <span>{!! $slider->description !!}</span> </div>
+                                                <span>{!! $slider->description !!}</span>
+                                            </div>
                                             <div class="button-holder fadeInDown-3"> <a href="index.php?page=single-product"
                                                     class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop
                                                     Now</a> </div>
@@ -244,10 +230,10 @@
                                     <div class="info-box">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <h4 class="info-box-heading green">money back</h4>
+                                                <h4 class="info-box-heading green">{{ trans('slider.money_back') }}</h4>
                                             </div>
                                         </div>
-                                        <h6 class="text">30 Days Money Back Guarantee</h6>
+                                        <h6 class="text">{{ trans('slider.money_back_text') }}</h6>
                                     </div>
                                 </div>
                                 <!-- .col -->
@@ -256,10 +242,10 @@
                                     <div class="info-box">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <h4 class="info-box-heading green">free shipping</h4>
+                                                <h4 class="info-box-heading green">{{ trans('slider.free_shipping') }}</h4>
                                             </div>
                                         </div>
-                                        <h6 class="text">Shipping on orders over $99</h6>
+                                        <h6 class="text">{{ trans('slider.free_shipping_text') }}</h6>
                                     </div>
                                 </div>
                                 <!-- .col -->
@@ -268,10 +254,10 @@
                                     <div class="info-box">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <h4 class="info-box-heading green">Special Sale</h4>
+                                                <h4 class="info-box-heading green">{{ trans('slider.special_sale') }}</h4>
                                             </div>
                                         </div>
-                                        <h6 class="text">Extra $5 off on all items </h6>
+                                        <h6 class="text">{{ trans('slider.special_sale_text') }}</h6>
                                     </div>
                                 </div>
                                 <!-- .col -->
@@ -305,11 +291,6 @@
                             <div class="tab-pane in active" id="all">
                                 <div class="product-slider">
                                     <div class="owl-carousel home-owl-carousel custom-carousel owl-theme" data-item="4">
-                                        @php
-                                            $products = App\Models\Product::where('status', '=', 1)
-                                                ->limit(6)
-                                                ->get();
-                                        @endphp
                                         @foreach ($products as $product)
                                             <div class="item item-carousel">
                                                 <div class="products">
@@ -327,7 +308,8 @@
 
                                                             @if ($product->discount_price != null)
                                                                 <div class="tag hot">
-                                                                    <span>{{ round($discountPercent) }}%</span></div>
+                                                                    <span>{{ round($discountPercent) }}%</span>
+                                                                </div>
                                                             @else
                                                                 <div class="tag new"><span>new</span></div>
                                                             @endif
@@ -368,25 +350,27 @@
 
                                                                     <li class="add-cart-button btn-group">
 
-                                                                        <button class="btn btn-primary icon" type="button"
-                                                                            title="Add Cart" data-toggle="modal"
-                                                                            data-target="#exampleModal" id="{{ $product->id }}" onclick="getProduct(this.id)">
+                                                                        <button class="btn btn-primary icon"
+                                                                            type="button" title="Add Cart"
+                                                                            data-toggle="modal"
+                                                                            data-target="#exampleModal"
+                                                                            id="{{ $product->id }}"
+                                                                            onclick="getProduct(this.id)">
                                                                             <i class="fa fa-shopping-cart"></i>
                                                                         </button>
 
-                                                                        <button class="btn btn-primary cart-btn" type="button">Add to
+                                                                        <button class="btn btn-primary cart-btn"
+                                                                            type="button">Add to
                                                                             cart</button>
                                                                     </li>
 
                                                                     {{-- Wishlist Button --}}
-                                                                    <button class="btn btn-primary icon"
-                                                                    type="button"
-                                                                    title="Wishlist"
-                                                                    id="{{ $product->id }}"
-                                                                    onclick="addToWishlist(this.id)">
-                                                                    <i class="fa fa-heart"></i>
+                                                                    <button class="btn btn-primary icon" type="button"
+                                                                        title="Wishlist" id="{{ $product->id }}"
+                                                                        onclick="addToWishlist(this.id)">
+                                                                        <i class="fa fa-heart"></i>
                                                                     </button>
-                                                                    
+
                                                                     <li class="lnk"> <a data-toggle="tooltip"
                                                                             class="add-to-cart" href="detail.html"
                                                                             title="Compare"> <i class="fa fa-signal"
@@ -551,12 +535,6 @@
                     <section class="section featured-product wow fadeInUp">
                         <h3 class="section-title">Featured products</h3>
                         <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
-                            @php
-                                $featuredProducts = App\Models\Product::where('featured', 1)
-                                    ->orderBy('id', 'DESC')
-                                    ->limit(6)
-                                    ->get();
-                            @endphp
 
                             @foreach ($featuredProducts as $product)
                                 <div class="item item-carousel">
@@ -611,7 +589,8 @@
 
                                                             <button class="btn btn-primary icon" type="button"
                                                                 title="Add Cart" data-toggle="modal"
-                                                                data-target="#exampleModal" id="{{ $product->id }}" onclick="getProduct(this.id)">
+                                                                data-target="#exampleModal" id="{{ $product->id }}"
+                                                                onclick="getProduct(this.id)">
                                                                 <i class="fa fa-shopping-cart"></i>
                                                             </button>
 
@@ -620,12 +599,10 @@
                                                         </li>
 
                                                         {{-- Wishlist Button --}}
-                                                        <button class="btn btn-primary icon"
-                                                        type="button"
-                                                        title="Wishlist"
-                                                        id="{{ $product->id }}"
-                                                        onclick="addToWishlist(this.id)">
-                                                        <i class="fa fa-heart"></i>
+                                                        <button class="btn btn-primary icon" type="button"
+                                                            title="Wishlist" id="{{ $product->id }}"
+                                                            onclick="addToWishlist(this.id)">
+                                                            <i class="fa fa-heart"></i>
                                                         </button>
 
                                                         <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart"
@@ -712,7 +689,8 @@
 
                                                             <button class="btn btn-primary icon" type="button"
                                                                 title="Add Cart" data-toggle="modal"
-                                                                data-target="#exampleModal" id="{{ $product->id }}" onclick="getProduct(this.id)">
+                                                                data-target="#exampleModal" id="{{ $product->id }}"
+                                                                onclick="getProduct(this.id)">
                                                                 <i class="fa fa-shopping-cart"></i>
                                                             </button>
 
