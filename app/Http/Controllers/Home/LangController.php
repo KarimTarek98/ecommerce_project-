@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class LangController extends Controller
 {
-    public function english()
+    /*public function english()
     {
         session()->get('lang');
         session()->forget('lang');
@@ -22,5 +22,5 @@ class LangController extends Controller
         session()->forget('lang');
         Session::put('lang', 'ar');
         return redirect()->back();
-    }
+    }*/
 }

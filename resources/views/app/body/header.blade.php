@@ -7,31 +7,31 @@
                 <div class="cnt-account">
                     <ul class="list-unstyled">
                         <li><a href="#"><i class="icon fa fa-user"></i>
-                                @if (session()->get('lang') == 'ar')
-                                حسابي
+                                @if (App::getLocale() == 'ar')
+                                    حسابي
                                 @else
-                                My Account
+                                    My Account
                                 @endif
                             </a></li>
                         <li><a href="{{ route('wishlist') }}"><i class="icon fa fa-heart"></i>
-                                @if (session()->get('lang') == 'ar')
-                                قائمة الرغبات
+                                @if (App::getLocale() == 'ar')
+                                    قائمة الرغبات
                                 @else
-                                Wishlist
+                                    Wishlist
                                 @endif
                             </a></li>
                         <li><a href="{{ route('my-cart') }}">
-                                @if (session()->get('lang') == 'ar')
-                                مشترياتي <i class="icon fa fa-shopping-cart"></i>
+                                @if (App::getLocale() == 'ar')
+                                    مشترياتي <i class="icon fa fa-shopping-cart"></i>
                                 @else
-                                My Cart <i class="icon fa fa-shopping-cart"></i>
+                                    My Cart <i class="icon fa fa-shopping-cart"></i>
                                 @endif
                             </a></li>
                         <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>
-                                @if (session()->get('lang') == 'ar')
-                                الدفع
+                                @if (App::getLocale() == 'ar')
+                                    الدفع
                                 @else
-                                Checkout
+                                    Checkout
                                 @endif
                             </a></li>
 
@@ -39,11 +39,10 @@
                             <li><a href="{{ route('dashboard') }}"><i class="icon fa fa-user"></i>Profile</a></li>
                         @else
                             <li><a href="{{ url('/login') }}"><i class="icon fa fa-lock"></i>
-                                    @if (session()->get('lang') == 'ar')
-                                    حساب جديد | تسجيل
-
+                                    @if (App::getLocale() == 'ar')
+                                        حساب جديد | تسجيل
                                     @else
-                                    Login | Register
+                                        Login | Register
                                     @endif
                                 </a></li>
                         @endauth
@@ -64,19 +63,31 @@
                             <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
                                 <span class="value">
                                     @if (session()->get('lang') == 'ar')
-                                    اللغة
+                                        اللغة
                                     @else
-                                    Language
+                                        Language
                                     @endif
                                 </span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                @if (session()->get('lang') == 'ar')
-                                    <li><a href="{{ route('lang.en') }}">English</a></li>
+                                {{-- @if (session()->get('lang') == 'ar')
+                                    <li><a href="">English</a></li>
+
                                 @else
-                                    <li><a href="{{ route('lang.ar') }}">العربية</a></li>
-                                @endif
+                                    <li><a href="">العربية</a></li>
+
+                                @endif --}}
+                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                    <li>
+                                        <a rel="alternate" hreflang="{{ $localeCode }}"
+                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            {{ $properties['native'] }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                                {{-- {{ route('lang.en') }} --}}
+                                {{-- {{ route('lang.ar') }} --}}
                             </ul>
                         </li>
                     </ul>
@@ -146,8 +157,8 @@
                                 <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
                                 <div class="basket-item-count"><span class="count" id="items_count"></span></div>
                                 <div class="total-price-basket"> <span class="lbl">cart -</span> <span
-                                        class="total-price"> <span class="sign">$</span><span
-                                            class="value" id="total_price"></span> </span> </div>
+                                        class="total-price"> <span class="sign">$</span><span class="value"
+                                            id="total_price"></span> </span> </div>
                             </div>
                         </a>
                         <ul class="dropdown-menu">
@@ -158,7 +169,7 @@
                                 </div>
 
                                 <div class="clearfix cart-total">
-                                    <div class="pull-right"> <span class="text" >Sub Total :</span><span
+                                    <div class="pull-right"> <span class="text">Sub Total :</span><span
                                             class='price' id="sub_total">$</span> </div>
                                     <div class="clearfix"></div>
                                     <a href="checkout.html"
@@ -200,11 +211,7 @@
                             <ul class="nav navbar-nav">
                                 <li class="active dropdown yamm-fw"> <a href="home.html" data-hover="dropdown"
                                         class="dropdown-toggle" data-toggle="dropdown">
-                                        @if (session()->get('lang') == 'ar')
-                                        الرئيسية
-                                        @else
-                                        Home
-                                        @endif
+                                        {{ trans('header-nav.Home') }}
                                     </a>
                                 </li>
 
@@ -215,12 +222,7 @@
                                 @foreach ($categories as $category)
                                     <li class="dropdown yamm mega-menu"> <a href="home.html" data-hover="dropdown"
                                             class="dropdown-toggle" data-toggle="dropdown">
-                                            @if (session()->get('lang') == 'ar')
-                                                {{ $category->category_name_ar }}
-                                            @else
-                                                {{ $category->category_name_en }}
-                                            @endif
-
+                                            {{ trans('header-nav.' . strtolower(str_replace(' ', '_', $category->category_name_en))) }}
                                         </a>
                                         <ul class="dropdown-menu container">
                                             <li>
@@ -235,15 +237,11 @@
 
                                                         @foreach ($subCategories as $subCategory)
                                                             <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                                                                <a href="{{ url('products/' . $subCategory->id . '/' . $subCategory->subcategory_name_en) }}">
-                                                                <h2 class="title">
-                                                                    @if (session()->get('lang') == 'ar')
-                                                                        {{ $subCategory->subcategory_name_ar }}
-                                                                    @else
-                                                                        {{ $subCategory->subcategory_name_en }}
-                                                                    @endif
-
-                                                                </h2>
+                                                                <a
+                                                                    href="{{ url('products/' . $subCategory->id . '/' . $subCategory->subcategory_name_en) }}">
+                                                                    <h2 class="title">
+                                                                        {{ trans('header-nav.' . strtolower(str_replace(' ', '_', $subCategory->subcategory_name_en))) }}
+                                                                    </h2>
                                                                 </a>
                                                                 <ul class="links">
                                                                     @php
@@ -252,8 +250,9 @@
                                                                             ->get();
                                                                     @endphp
                                                                     @foreach ($subSubCategories as $subSubCategory)
-                                                                        <li><a href="{{ url('products/sub&sub/' . $subSubCategory->id . '/' . $subSubCategory->sub_sub_category_slug_en) }}">
-                                                                                @if (session()->get('lang') == 'ar')
+                                                                        <li><a
+                                                                                href="{{ url('products/sub&sub/' . $subSubCategory->id . '/' . $subSubCategory->sub_sub_category_slug_en) }}">
+                                                                                @if (App::getLocale() == 'ar')
                                                                                     {{ $subSubCategory->sub_sub_category_name_ar }}
                                                                                 @else
                                                                                     {{ $subSubCategory->sub_sub_category_name_en }}
@@ -281,11 +280,10 @@
                                 @endforeach
 
                                 <li class="dropdown  navbar-right special-menu"> <a href="#">
-                                        @if (session()->get('lang') == 'ar')
-                                        عروض اليوم
-
+                                        @if (App::getLocale() == 'ar')
+                                            عروض اليوم
                                         @else
-                                        Todays offer
+                                            Todays offer
                                         @endif
                                     </a>
                                 </li>

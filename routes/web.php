@@ -12,7 +12,9 @@ use App\Http\Controllers\User\MyCartController;
 use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\WishlistController;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +28,12 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-// Homepage
-Route::get('/', [IndexController::class, 'index']);
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function () {
+
+    Route::get('/', [IndexController::class, 'index']);
 
 Route::controller(IndexController::class)->group(function () {
     Route::get('/products/{tag}', 'productsByTags');
@@ -98,35 +104,38 @@ Route::middleware(['auth:sanctum,web', config('jetstream.auth_session'), 'verifi
             'user' => User::find(Auth::user()->id)
         ]);
     })->name('dashboard');
-});
 
-Route::controller(UserController::class)->group(function () {
-    Route::get('/logout', 'logout')->name('user.logout');
-    Route::get('/user/edit-profile', 'editProfile')->name('user.edit-profile');
-    Route::post('/update-profile', 'updateProfile')->name('update.user-profile');
-    Route::get('/user/change-password', 'changePassword')->name('change-password.user');
-    Route::post('/user/update-pass', 'updatePass')->name('update.user-password');
-});
-
-// Checkout Routes
-Route::controller(CheckoutController::class)->group(function () {
-    Route::get('/checkout', 'checkoutRedirect')->name('checkout');
-    Route::get('/checkout/shipping/get-regions/{city_id}', 'getRegions');
-    Route::get('/checkout/shipping/get-districts/{region_id}', 'getDistricts');
-
-    Route::post('/checkout-save', 'checkoutProceed')->name('checkout.save');
-});
-
-// Stripe Payment Routes
-Route::middleware(['auth', 'user'])->group(function () {
-    Route::controller(StripeController::class)->group(function () {
-        Route::post('/stripe-order', 'stripeOrder')->name('stripe-order');
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/logout', 'logout')->name('user.logout');
+        Route::get('/user/edit-profile', 'editProfile')->name('user.edit-profile');
+        Route::post('/update-profile', 'updateProfile')->name('update.user-profile');
+        Route::get('/user/change-password', 'changePassword')->name('change-password.user');
+        Route::post('/user/update-pass', 'updatePass')->name('update.user-password');
     });
+
+    // Checkout Routes
+    Route::controller(CheckoutController::class)->group(function () {
+        Route::get('/checkout', 'checkoutRedirect')->name('checkout');
+        Route::get('/checkout/shipping/get-regions/{city_id}', 'getRegions');
+        Route::get('/checkout/shipping/get-districts/{region_id}', 'getDistricts');
+
+        Route::post('/checkout-save', 'checkoutProceed')->name('checkout.save');
+    });
+
+    // Stripe Payment Routes
+    Route::post('stripe-order', [StripeController::class, 'stripeOrder'])
+        ->middleware('user')->name('stripe-order');
+
 });
+
+});
+
+// Homepage
+
 
 // Multilingual Routes
-Route::get('/ar', [LangController::class, 'arabic'])->name('lang.ar');
-Route::get('/en', [LangController::class, 'english'])->name('lang.en');
+//Route::get('/ar', [LangController::class, 'arabic'])->name('lang.ar');
+// Route::get('/en', [LangController::class, 'english'])->name('lang.en');
 
 // Product Details Routes
 Route::controller(ProductDetailsController::class)->group(function () {
